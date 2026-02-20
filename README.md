@@ -1,36 +1,140 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Wedding Invitation Website
+
+A beautiful, modern wedding invitation website built with Next.js, Bun, GSAP, and Tailwind CSS.
+
+## Features
+
+- 🎨 **Beautiful Design** - Modern, elegant design with smooth animations
+- 📱 **Fully Responsive** - Works perfectly on all devices
+- ✨ **GSAP Animations** - Smooth scroll-triggered animations
+- 💑 **Couple Profiles** - Showcase bride and groom information
+- 📸 **Photo Gallery** - Display precious moments
+- ⏰ **Countdown Timer** - Real-time countdown to the big day
+- 📍 **Location Maps** - Google Maps integration for event locations
+- ✅ **RSVP System** - Guest response and attendance tracking with backend API
+- 🎁 **Gift Section** - Digital gift/envelope feature
+- 💬 **Wishes** - Guest wishes and messages with backend storage
+- 📺 **Live Streaming** - Integration for live ceremony streaming
+- 🎵 **Music Player** - Background music player with playlist support
+- 🔌 **Backend API** - RESTful API for RSVP and wishes management
+
+## Tech Stack
+
+- **Framework**: Next.js 16 (App Router)
+- **Runtime**: Bun
+- **Database**: Supabase (PostgreSQL)
+- **Styling**: Tailwind CSS 4
+- **Animations**: GSAP with ScrollTrigger
+- **Icons**: Lucide React
+- **Date Handling**: date-fns
+- **TypeScript**: Full type safety
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Bun installed on your system ([Install Bun](https://bun.sh))
+
+### Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
+# Install dependencies
+bun install
+
+# Run development server
 bun dev
+
+# Build for production
+bun build
+
+# Start production server
+bun start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The app will be available at `http://localhost:3000`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+wedding-invitation/
+├── app/
+│   ├── layout.tsx          # Root layout
+│   ├── page.tsx            # Main page
+│   └── globals.css         # Global styles
+├── components/
+│   ├── Navigation.tsx      # Navigation bar
+│   ├── Hero.tsx            # Hero section
+│   ├── CoupleSection.tsx   # Couple profiles
+│   ├── GallerySection.tsx  # Photo gallery
+│   ├── DateSection.tsx     # Countdown timer
+│   ├── LocationSection.tsx # Event locations
+│   ├── RSVPSection.tsx     # RSVP form
+│   ├── LiveStreamingSection.tsx
+│   ├── GiftSection.tsx     # Gift section
+│   └── WishesSection.tsx   # Guest wishes
+├── lib/
+│   └── data.ts             # Sample data
+└── types/
+    └── index.ts            # TypeScript types
+```
 
-## Learn More
+## Customization
 
-To learn more about Next.js, take a look at the following resources:
+### Update Couple Information
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Edit `lib/data.ts` to update:
+- Couple names and details
+- Event dates and locations
+- Gallery images
+- Blessing messages
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Styling
 
-## Deploy on Vercel
+The project uses Tailwind CSS. Customize colors and styles in:
+- `app/globals.css` - Global styles
+- Component files - Component-specific styles
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Images
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Add your images to the `public/` directory:
+- `public/hero-bg.jpg` - Hero background
+- `public/bride.jpg` - Bride photo
+- `public/groom.jpg` - Groom photo
+- `public/gallery/` - Gallery images
+
+## Backend API
+
+The project includes a backend API with the following endpoints:
+
+- `POST /api/rsvp` - Submit RSVP responses
+- `GET /api/rsvp` - Get RSVP statistics
+- `POST /api/wishes` - Submit wishes
+- `GET /api/wishes` - Get all wishes
+- `GET /api/music` - Get music playlist
+
+See [BACKEND.md](./BACKEND.md) for detailed API documentation.
+
+## Music Setup
+
+1. Add your music files to `public/music/`
+2. Add cover images (optional) to `public/music/covers/`
+3. Update the song list in `lib/music.ts`
+
+## Features to Implement
+
+- [x] Database integration (Supabase/PostgreSQL) ✅
+- [ ] Image upload functionality
+- [ ] Google Maps API integration
+- [ ] Live streaming platform integration
+- [ ] Payment gateway for gifts
+- [ ] Email notifications
+- [ ] Admin dashboard
+- [ ] Rate limiting and spam protection
+
+## License
+
+MIT License - feel free to use this for your wedding!
+
+## Credits
+
+Built with ❤️ using Next.js, Bun, and GSAP
