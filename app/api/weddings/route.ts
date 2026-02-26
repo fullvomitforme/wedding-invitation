@@ -2,18 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { createServerClient } from "@/lib/supabase";
-
-const DEFAULT_SECTIONS = [
-  { id: "hero", enabled: true, order: 0 },
-  { id: "couple", enabled: true, order: 1 },
-  { id: "date", enabled: true, order: 2 },
-  { id: "location", enabled: true, order: 3 },
-  { id: "gallery", enabled: true, order: 4 },
-  { id: "rsvp", enabled: true, order: 5 },
-  { id: "wishes", enabled: true, order: 6 },
-  { id: "gift", enabled: true, order: 7 },
-  { id: "music", enabled: true, order: 8 },
-];
+import { defaultSections, defaultContent } from "@/lib/wedding-defaults";
 
 export async function POST(request: NextRequest) {
   try {
@@ -25,7 +14,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json().catch(() => ({}));
-    const content = (body.content as Record<string, unknown>) ?? {};
+    const content = (body.content as Record<string, unknown>) ?? defaultContent;
 
     const supabase = createServerClient();
     const { data: wedding, error: weddingError } = await supabase
@@ -33,7 +22,7 @@ export async function POST(request: NextRequest) {
       .insert({
         status: "draft",
         template_id: "classic",
-        sections: DEFAULT_SECTIONS,
+        sections: defaultSections,
         content,
       })
       .select("id, slug")
