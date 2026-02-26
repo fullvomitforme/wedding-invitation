@@ -1,28 +1,38 @@
 # Wedding Invitation Website
 
-A beautiful, modern wedding invitation website built with Next.js, Bun, GSAP, and Tailwind CSS.
+A beautiful, modern wedding invitation website built with Next.js, Bun, GSAP, and Tailwind CSS. **SaaS mode**: create multiple weddings, each with its own dashboard and public invitation at a custom subdomain.
 
 ## Features
 
-- 🎨 **Beautiful Design** - Modern, elegant design with smooth animations
-- 📱 **Fully Responsive** - Works perfectly on all devices
-- ✨ **GSAP Animations** - Smooth scroll-triggered animations
-- 💑 **Couple Profiles** - Showcase bride and groom information
-- 📸 **Photo Gallery** - Display precious moments
-- ⏰ **Countdown Timer** - Real-time countdown to the big day
-- 📍 **Location Maps** - Google Maps integration for event locations
-- ✅ **RSVP System** - Guest response and attendance tracking with backend API
-- 🎁 **Gift Section** - Digital gift/envelope feature
-- 💬 **Wishes** - Guest wishes and messages with backend storage
-- 📺 **Live Streaming** - Integration for live ceremony streaming
-- 🎵 **Music Player** - Background music player with playlist support
-- 🔌 **Backend API** - RESTful API for RSVP and wishes management
+### SaaS (multi-tenant)
+
+- **Dashboard** – Create weddings, edit content (couple, events, gallery, music), toggle and reorder sections, choose template.
+- **User-editable subdomain** – Release a wedding to get a live site at `https://{slug}.yourdomain.com`.
+- **Better Auth** – Sign up, sign in, sessions. Invite collaborators (owner/collaborator) per wedding.
+- **Preview** – Draft weddings are previewable at `/preview/[id]` for collaborators.
+- **Tenant-scoped RSVP & Wishes** – Each invitation has its own RSVPs and wishes; APIs accept optional `wedding_id`.
+
+### Invitation (per wedding)
+
+- 🎨 **Beautiful Design** – Modern, elegant design with smooth animations
+- 📱 **Fully Responsive** – Works on all devices
+- ✨ **GSAP Animations** – Scroll-triggered animations
+- 💑 **Couple Profiles** – Bride and groom information
+- 📸 **Photo Gallery** – Precious moments
+- ⏰ **Countdown Timer** – Countdown to the big day
+- 📍 **Location** – Event locations and map links
+- ✅ **RSVP System** – Guest responses and stats (scoped by wedding)
+- 🎁 **Gift Section** – Digital gift/envelope
+- 💬 **Wishes** – Guest messages (scoped by wedding)
+- 📺 **Live Streaming** – Placeholder for streaming
+- 🎵 **Music Player** – Playlist support
 
 ## Tech Stack
 
 - **Framework**: Next.js 16 (App Router)
 - **Runtime**: Bun
 - **Database**: Supabase (PostgreSQL)
+- **Auth**: Better Auth (email/password, same Postgres)
 - **Styling**: Tailwind CSS 4
 - **Animations**: GSAP with ScrollTrigger
 - **Icons**: Lucide React
@@ -53,29 +63,57 @@ bun start
 
 The app will be available at `http://localhost:3000`
 
+### Environment variables
+
+Create `.env.local` with:
+
+| Variable | Description |
+|----------|-------------|
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon key |
+| `SUPABASE_SERVICE_ROLE_KEY` | (Optional) For server-side DB access |
+| `BETTER_AUTH_SECRET` | Secret for Better Auth (e.g. `openssl rand -base64 32`) |
+| `BETTER_AUTH_URL` | App URL (e.g. `http://localhost:3000`) |
+| `DATABASE_URL` | Postgres connection string (for Better Auth; can use Supabase connection string) |
+
+See `.env.example` for a template.
+
+### Database migrations
+
+1. **Supabase (weddings, RSVP, wishes)**  
+   Run the SQL in `supabase/migrations/` in order (Supabase SQL Editor or `supabase db push` if linked):
+   - `20250226000000_weddings_and_collaborators.sql`
+   - `20250226000001_rsvp_wishes_wedding_id.sql`
+   Plus the existing `supabase/schema.sql` for the initial `rsvp` and `wishes` tables if needed.
+
+2. **Better Auth (user, session)**  
+   Run: `bunx @better-auth/cli migrate` (or use the CLI `generate` and apply the SQL manually). Requires `DATABASE_URL` and the same Postgres instance.
+
+### Subdomain (production)
+
+- Point a **wildcard DNS** record for your domain (e.g. `*.yourdomain.com`) to your app host.
+- Use a **wildcard TLS** certificate (e.g. `*.yourdomain.com`). No per-wedding DNS or cert steps at release time.
+
+Design and implementation plan: [docs/plans/2025-02-26-wedding-saas-design.md](docs/plans/2025-02-26-wedding-saas-design.md).
+
 ## Project Structure
 
 ```
 wedding-invitation/
 ├── app/
-│   ├── layout.tsx          # Root layout
-│   ├── page.tsx            # Main page
-│   └── globals.css         # Global styles
-├── components/
-│   ├── Navigation.tsx      # Navigation bar
-│   ├── Hero.tsx            # Hero section
-│   ├── CoupleSection.tsx   # Couple profiles
-│   ├── GallerySection.tsx  # Photo gallery
-│   ├── DateSection.tsx     # Countdown timer
-│   ├── LocationSection.tsx # Event locations
-│   ├── RSVPSection.tsx     # RSVP form
-│   ├── LiveStreamingSection.tsx
-│   ├── GiftSection.tsx     # Gift section
-│   └── WishesSection.tsx   # Guest wishes
-├── lib/
-│   └── data.ts             # Sample data
-└── types/
-    └── index.ts            # TypeScript types
+│   ├── layout.tsx
+│   ├── page.tsx            # Landing (redirects to /dashboard if logged in)
+│   ├── (marketing)/        # Login, signup (redirect if logged in)
+│   ├── dashboard/          # Wedding list, create, edit (content, layout, settings)
+│   ├── demo/               # Demo invitation (static content from lib/data)
+│   ├── invitation/         # Public invitation by subdomain (ClassicTemplate)
+│   ├── preview/[id]/       # Draft preview for collaborators
+│   └── api/                # auth, weddings, rsvp, wishes, music
+├── components/             # Hero, CoupleSection, etc. + InvitationContext
+├── lib/                    # auth, auth-client, data, music, wedding-defaults, supabase
+├── supabase/migrations/    # weddings, wedding_collaborators, wedding_id on rsvp/wishes
+├── middleware.ts           # Subdomain → /invitation with x-wedding-slug
+└── docs/plans/             # Design and implementation plan
 ```
 
 ## Customization
@@ -104,13 +142,15 @@ Add your images to the `public/` directory:
 
 ## Backend API
 
-The project includes a backend API with the following endpoints:
-
-- `POST /api/rsvp` - Submit RSVP responses
-- `GET /api/rsvp` - Get RSVP statistics
-- `POST /api/wishes` - Submit wishes
-- `GET /api/wishes` - Get all wishes
-- `GET /api/music` - Get music playlist
+- `POST /api/rsvp` – Submit RSVP (body may include `wedding_id` for tenant scope)
+- `GET /api/rsvp` – Get RSVP list and stats (optional `?wedding_id=` for tenant scope)
+- `POST /api/wishes` – Submit wish (body may include `wedding_id`)
+- `GET /api/wishes` – Get wishes (optional `?wedding_id=`)
+- `GET /api/music` – Get music playlist
+- `POST /api/weddings` – Create wedding (auth required)
+- `GET /api/weddings/[id]` – Get wedding (auth + collaborator)
+- `PATCH /api/weddings/[id]` – Update wedding (auth + collaborator)
+- `GET /api/weddings/check-slug?slug=` – Check slug availability (auth required)
 
 See [BACKEND.md](./BACKEND.md) for detailed API documentation.
 
@@ -123,12 +163,13 @@ See [BACKEND.md](./BACKEND.md) for detailed API documentation.
 ## Features to Implement
 
 - [x] Database integration (Supabase/PostgreSQL) ✅
-- [ ] Image upload functionality
+- [x] Admin dashboard (SaaS) ✅
+- [ ] Image upload (dashboard gallery/couple photos)
 - [ ] Google Maps API integration
 - [ ] Live streaming platform integration
 - [ ] Payment gateway for gifts
 - [ ] Email notifications
-- [ ] Admin dashboard
+- [ ] Invite collaborators by email
 - [ ] Rate limiting and spam protection
 
 ## License
