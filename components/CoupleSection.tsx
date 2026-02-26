@@ -4,11 +4,14 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { coupleData } from "@/lib/data";
+import { useInvitation } from "@/components/InvitationContext";
 import { MapPin } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function CoupleSection() {
+  const inv = useInvitation();
+  const coupleDataToUse = inv?.content?.couple ?? { bride: coupleData.bride, groom: coupleData.groom };
   const sectionRef = useRef<HTMLDivElement>(null);
   const brideRef = useRef<HTMLDivElement>(null);
   const groomRef = useRef<HTMLDivElement>(null);
@@ -58,10 +61,10 @@ export default function CoupleSection() {
             className="bg-white rounded-2xl shadow-lg p-8 text-center hover:shadow-xl transition-shadow duration-300"
           >
             <div className="w-48 h-48 mx-auto mb-6 rounded-full bg-gradient-to-br from-rose-200 to-pink-300 flex items-center justify-center overflow-hidden">
-              {coupleData.bride.image ? (
+              {coupleDataToUse.bride.image ? (
                 <img
-                  src={coupleData.bride.image}
-                  alt={coupleData.bride.name}
+                  src={coupleDataToUse.bride.image}
+                  alt={coupleDataToUse.bride.name}
                   className="w-full h-full object-cover"
                 />
               ) : (
@@ -69,15 +72,15 @@ export default function CoupleSection() {
               )}
             </div>
             <h3 className="text-3xl font-serif font-bold mb-2 text-gray-800">
-              {coupleData.bride.name}
+              {coupleDataToUse.bride.name}
             </h3>
-            <p className="text-sm text-gray-500 mb-4">@{coupleData.bride.username}</p>
+            <p className="text-sm text-gray-500 mb-4">@{coupleDataToUse.bride.username}</p>
             <div className="text-sm text-gray-600 mb-4 whitespace-pre-line">
-              {coupleData.bride.parentInfo}
+              {coupleDataToUse.bride.parentInfo}
             </div>
             <div className="flex items-center justify-center gap-2 text-gray-500">
               <MapPin className="w-4 h-4" />
-              <span className="text-sm">{coupleData.bride.location}</span>
+              <span className="text-sm">{coupleDataToUse.bride.location}</span>
             </div>
           </div>
 
@@ -86,10 +89,10 @@ export default function CoupleSection() {
             className="bg-white rounded-2xl shadow-lg p-8 text-center hover:shadow-xl transition-shadow duration-300"
           >
             <div className="w-48 h-48 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-200 to-indigo-300 flex items-center justify-center overflow-hidden">
-              {coupleData.groom.image ? (
+              {coupleDataToUse.groom.image ? (
                 <img
-                  src={coupleData.groom.image}
-                  alt={coupleData.groom.name}
+                  src={coupleDataToUse.groom.image}
+                  alt={coupleDataToUse.groom.name}
                   className="w-full h-full object-cover"
                 />
               ) : (
@@ -97,15 +100,15 @@ export default function CoupleSection() {
               )}
             </div>
             <h3 className="text-3xl font-serif font-bold mb-2 text-gray-800">
-              {coupleData.groom.name}
+              {coupleDataToUse.groom.name}
             </h3>
-            <p className="text-sm text-gray-500 mb-4">@{coupleData.groom.username}</p>
+            <p className="text-sm text-gray-500 mb-4">@{coupleDataToUse.groom.username}</p>
             <div className="text-sm text-gray-600 mb-4 whitespace-pre-line">
-              {coupleData.groom.parentInfo}
+              {coupleDataToUse.groom.parentInfo}
             </div>
             <div className="flex items-center justify-center gap-2 text-gray-500">
               <MapPin className="w-4 h-4" />
-              <span className="text-sm">{coupleData.groom.location}</span>
+              <span className="text-sm">{coupleDataToUse.groom.location}</span>
             </div>
           </div>
         </div>

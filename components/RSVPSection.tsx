@@ -4,11 +4,14 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { RSVPResponse } from "@/types";
+import { useInvitation } from "@/components/InvitationContext";
 import { Send, Users } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function RSVPSection() {
+  const inv = useInvitation();
+  const weddingId = inv?.weddingId;
   const sectionRef = useRef<HTMLDivElement>(null);
   const [guestCount, setGuestCount] = useState(0);
   const [formData, setFormData] = useState<RSVPResponse>({
@@ -21,11 +24,11 @@ export default function RSVPSection() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch RSVP statistics on mount
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await fetch("/api/rsvp");
+        const url = weddingId ? `/api/rsvp?wedding_id=${encodeURIComponent(weddingId)}` : "/api/rsvp";
+        const response = await fetch(url);
         if (response.ok) {
           const data = await response.json();
           setGuestCount(data.statistics?.totalGuests || 0);
@@ -35,7 +38,7 @@ export default function RSVPSection() {
       }
     };
     fetchStats();
-  }, []);
+  }, [weddingId]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -60,12 +63,11 @@ export default function RSVPSection() {
     setError(null);
 
     try {
+      const body = weddingId ? { ...formData, wedding_id: weddingId } : formData;
       const response = await fetch("/api/rsvp", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
       });
 
       if (!response.ok) {
@@ -73,10 +75,8 @@ export default function RSVPSection() {
         throw new Error(errorData.error || "Failed to submit RSVP");
       }
 
-      const data = await response.json();
-      
-      // Update guest count
-      const statsResponse = await fetch("/api/rsvp");
+      const statsUrl = weddingId ? `/api/rsvp?wedding_id=${encodeURIComponent(weddingId)}` : "/api/rsvp";
+      const statsResponse = await fetch(statsUrl);
       if (statsResponse.ok) {
         const statsData = await statsResponse.json();
         setGuestCount(statsData.statistics?.totalGuests || 0);

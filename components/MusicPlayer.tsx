@@ -3,6 +3,8 @@
 import { useState, useRef, useEffect } from "react";
 import { Play, Pause, Volume2, VolumeX, Music } from "lucide-react";
 import { gsap } from "gsap";
+import { useInvitation } from "@/components/InvitationContext";
+import { defaultSongs } from "@/lib/music";
 
 interface Song {
   id: string;
@@ -18,6 +20,8 @@ interface MusicPlayerProps {
 }
 
 export default function MusicPlayer({ songs = [], autoPlay = false }: MusicPlayerProps) {
+  const inv = useInvitation();
+  const songsToUse = inv?.content?.music?.length ? inv.content.music : (songs.length ? songs : defaultSongs);
   const [isPlaying, setIsPlaying] = useState(autoPlay);
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
   const [volume, setVolume] = useState(0.5);
@@ -26,7 +30,7 @@ export default function MusicPlayer({ songs = [], autoPlay = false }: MusicPlaye
   const audioRef = useRef<HTMLAudioElement>(null);
   const playerRef = useRef<HTMLDivElement>(null);
 
-  const currentSong = songs[currentSongIndex] || null;
+  const currentSong = songsToUse[currentSongIndex] || null;
 
   useEffect(() => {
     if (audioRef.current) {
@@ -73,11 +77,11 @@ export default function MusicPlayer({ songs = [], autoPlay = false }: MusicPlaye
   };
 
   const nextSong = () => {
-    setCurrentSongIndex((prev) => (prev + 1) % songs.length);
+    setCurrentSongIndex((prev) => (prev + 1) % songsToUse.length);
   };
 
   const prevSong = () => {
-    setCurrentSongIndex((prev) => (prev - 1 + songs.length) % songs.length);
+    setCurrentSongIndex((prev) => (prev - 1 + songsToUse.length) % songsToUse.length);
   };
 
   const selectSong = (index: number) => {
@@ -159,12 +163,12 @@ export default function MusicPlayer({ songs = [], autoPlay = false }: MusicPlaye
               )}
             </button>
 
-            {songs.length > 1 && (
+            {songsToUse.length > 1 && (
               <button
                 onClick={() => setShowPlaylist(!showPlaylist)}
                 className="w-8 h-8 text-gray-600 hover:text-gray-800 transition-colors text-xs font-semibold"
               >
-                {songs.length}
+                {songsToUse.length}
               </button>
             )}
           </div>
@@ -184,9 +188,9 @@ export default function MusicPlayer({ songs = [], autoPlay = false }: MusicPlaye
         </div>
 
         {/* Playlist */}
-        {showPlaylist && songs.length > 1 && (
+        {showPlaylist && songsToUse.length > 1 && (
           <div className="border-t border-gray-200 max-h-64 overflow-y-auto">
-            {songs.map((song, index) => (
+            {songsToUse.map((song, index) => (
               <button
                 key={song.id}
                 onClick={() => selectSong(index)}

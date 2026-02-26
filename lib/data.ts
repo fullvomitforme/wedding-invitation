@@ -39,12 +39,12 @@ export const events: Event[] = [
 export const mainEventDate = new Date("2026-02-28");
 
 export const galleryImages: GalleryImage[] = [
-  { id: "1", url: "/gallery/1.jpg", alt: "Precious moment 1" },
-  { id: "2", url: "/gallery/2.jpg", alt: "Precious moment 2" },
-  { id: "3", url: "/gallery/3.jpg", alt: "Precious moment 3" },
-  { id: "4", url: "/gallery/4.jpg", alt: "Precious moment 4" },
-  { id: "5", url: "/gallery/5.jpg", alt: "Precious moment 5" },
-  { id: "6", url: "/gallery/6.jpg", alt: "Precious moment 6" },
+  { id: "1", url: "/gallery/1.jpg", alt: "Gallery photo 1" },
+  { id: "2", url: "/gallery/2.jpg", alt: "Gallery photo 2" },
+  { id: "3", url: "/gallery/3.jpg", alt: "Gallery photo 3" },
+  { id: "4", url: "/gallery/4.jpg", alt: "Gallery photo 4" },
+  { id: "5", url: "/gallery/5.jpg", alt: "Gallery photo 5" },
+  { id: "6", url: "/gallery/6.jpg", alt: "Gallery photo 6" },
 ];
 
 export const blessingMessage = {
@@ -54,6 +54,6 @@ export const blessingMessage = {
 };
 
 export const galleryQuote = {
-  title: "Precious moment",
+  title: "Gallery",
   text: '"Creating memories is a priceless gift. Memories last a lifetime; objects last only a short time."',
 };

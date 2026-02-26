@@ -4,12 +4,17 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { events } from "@/lib/data";
+import { useInvitation } from "@/components/InvitationContext";
 import { format } from "date-fns";
 import { MapPin, ExternalLink } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function LocationSection() {
+  const inv = useInvitation();
+  const eventsToUse = inv?.content?.events?.length
+    ? inv.content.events.map((ev) => ({ ...ev, date: new Date(ev.date) }))
+    : events;
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -44,7 +49,7 @@ export default function LocationSection() {
         </h2>
 
         <div className="space-y-8">
-          {events.map((event, index) => (
+          {eventsToUse.map((event, index) => (
             <div
               key={index}
               className="event-card bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300"

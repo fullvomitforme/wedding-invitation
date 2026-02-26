@@ -5,11 +5,14 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Wish } from "@/types";
 import { format } from "date-fns";
+import { useInvitation } from "@/components/InvitationContext";
 import { Send, MapPin } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function WishesSection() {
+  const inv = useInvitation();
+  const weddingId = inv?.weddingId;
   const sectionRef = useRef<HTMLDivElement>(null);
   const [wishes, setWishes] = useState<Wish[]>([]);
   const [formData, setFormData] = useState({
@@ -21,15 +24,15 @@ export default function WishesSection() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch wishes on mount
   useEffect(() => {
     const fetchWishes = async () => {
       setLoading(true);
       try {
-        const response = await fetch("/api/wishes");
+        const url = weddingId ? `/api/wishes?wedding_id=${encodeURIComponent(weddingId)}` : "/api/wishes";
+        const response = await fetch(url);
         if (response.ok) {
           const data = await response.json();
-          const wishesData = data.data.map((wish: any) => ({
+          const wishesData = (data.data as { id: string; name: string; location: string; message: string; createdAt: string }[]).map((wish) => ({
             ...wish,
             createdAt: new Date(wish.createdAt),
           }));
@@ -42,7 +45,7 @@ export default function WishesSection() {
       }
     };
     fetchWishes();
-  }, []);
+  }, [weddingId]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -70,12 +73,11 @@ export default function WishesSection() {
     setError(null);
 
     try {
+      const body = weddingId ? { ...formData, wedding_id: weddingId } : formData;
       const response = await fetch("/api/wishes", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
       });
 
       if (!response.ok) {
