@@ -4,11 +4,15 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { galleryImages, galleryQuote } from "@/lib/data";
+import { useInvitation } from "@/components/InvitationContext";
 import { X } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function GallerySection() {
+  const inv = useInvitation();
+  const imagesToUse = inv?.content?.gallery?.length ? inv.content.gallery : galleryImages;
+  const quoteToUse = inv?.content?.galleryQuote ?? galleryQuote;
   const sectionRef = useRef<HTMLDivElement>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
@@ -41,14 +45,14 @@ export default function GallerySection() {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4 text-gray-800">
-            {galleryQuote.title}
+            {quoteToUse.title}
           </h2>
           <p className="text-lg text-gray-600 italic max-w-2xl mx-auto">
-            {galleryQuote.text}
+            {quoteToUse.text}
           </p>
         </div>
 
-        {galleryImages.length === 0 ? (
+        {imagesToUse.length === 0 ? (
           <div className="text-center py-12 bg-gray-50 rounded-2xl">
             <p className="text-gray-500 mb-2">You haven&apos;t uploaded any gallery yet.</p>
             <p className="text-sm text-gray-400">
@@ -57,7 +61,7 @@ export default function GallerySection() {
           </div>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {galleryImages.map((image, index) => (
+            {imagesToUse.map((image) => (
               <div
                 key={image.id}
                 className="gallery-item aspect-square rounded-lg overflow-hidden cursor-pointer group relative"

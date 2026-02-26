@@ -20,7 +20,7 @@ export default function SignUpPage() {
     const { data, error: err } = await authClient.signUp.email({
       email,
       password,
-      name: name || undefined,
+      name: name.trim() || "Guest",
       callbackURL: "/dashboard",
     });
     setLoading(false);

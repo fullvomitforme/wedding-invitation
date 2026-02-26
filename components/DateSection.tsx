@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { mainEventDate } from "@/lib/data";
+import { useInvitation } from "@/components/InvitationContext";
 import { format } from "date-fns";
 import { Calendar } from "lucide-react";
 
@@ -17,6 +18,10 @@ interface Countdown {
 }
 
 export default function DateSection() {
+  const inv = useInvitation();
+  const mainDate = inv?.content?.mainEventDate
+    ? new Date(inv.content.mainEventDate)
+    : mainEventDate;
   const sectionRef = useRef<HTMLDivElement>(null);
   const [countdown, setCountdown] = useState<Countdown>({
     days: 0,
@@ -46,7 +51,7 @@ export default function DateSection() {
   useEffect(() => {
     const updateCountdown = () => {
       const now = new Date().getTime();
-      const distance = mainEventDate.getTime() - now;
+      const distance = mainDate.getTime() - now;
 
       if (distance > 0) {
         setCountdown({
@@ -62,12 +67,12 @@ export default function DateSection() {
     const interval = setInterval(updateCountdown, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [mainDate]);
 
   const saveToCalendar = () => {
-    const startDate = format(mainEventDate, "yyyyMMdd'T'HHmmss");
+    const startDate = format(mainDate, "yyyyMMdd'T'HHmmss");
     const endDate = format(
-      new Date(mainEventDate.getTime() + 4 * 60 * 60 * 1000),
+      new Date(mainDate.getTime() + 4 * 60 * 60 * 1000),
       "yyyyMMdd'T'HHmmss"
     );
     const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=Wedding+Ceremony&dates=${startDate}/${endDate}&details=Join+us+for+our+special+day`;
@@ -108,7 +113,7 @@ export default function DateSection() {
 
         <div className="mb-8">
           <p className="text-2xl md:text-3xl font-serif font-semibold text-gray-800 mb-2">
-            {format(mainEventDate, "EEEE, MMMM do, yyyy")}
+            {format(mainDate, "EEEE, MMMM do, yyyy")}
           </p>
         </div>
 

@@ -71,14 +71,14 @@ export function ContentForm({ weddingId, initialContent }: Props) {
     const next = { ...content };
     if (!next.couple) next.couple = { bride: { name: "", username: "", parentInfo: "", location: "" }, groom: { name: "", username: "", parentInfo: "", location: "" } };
     if (!next.couple[side]) next.couple[side] = { name: "", username: "", parentInfo: "", location: "" };
-    (next.couple[side] as Record<string, string>)[field] = value;
+    (next.couple[side] as unknown as Record<string, string>)[field] = value;
     setContent(next);
   };
 
   const updateEvent = (index: number, field: string, value: string | undefined) => {
     const events = [...(content.events ?? [])];
     while (events.length <= index) events.push({ title: "", date: "", time: "", location: "", address: "" });
-    (events[index] as Record<string, string | undefined>)[field] = value;
+    (events[index] as unknown as Record<string, string | undefined>)[field] = value;
     setContent({ ...content, events });
   };
 

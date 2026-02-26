@@ -3,9 +3,13 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { coupleData, blessingMessage } from "@/lib/data";
+import { useInvitation } from "@/components/InvitationContext";
 import { Heart } from "lucide-react";
 
 export default function Hero() {
+  const inv = useInvitation();
+  const couple = inv?.content?.couple ?? { bride: coupleData.bride, groom: coupleData.groom };
+  const blessing = inv?.content?.blessingMessage ?? blessingMessage;
   const heroRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -61,7 +65,7 @@ export default function Hero() {
         </div>
 
         <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6">
-          {coupleData.bride.name}
+          {couple.bride.name}
         </h1>
 
         <div className="flex items-center justify-center gap-4 mb-6">
@@ -71,14 +75,14 @@ export default function Hero() {
         </div>
 
         <h2 className="text-5xl md:text-7xl font-serif font-bold mb-8">
-          {coupleData.groom.name}
+          {couple.groom.name}
         </h2>
 
         <p className="text-lg md:text-xl mb-4 opacity-90">
-          {blessingMessage.translation}
+          {blessing.translation}
         </p>
         <p className="text-sm md:text-base opacity-75 italic">
-          {blessingMessage.source}
+          {blessing.source}
         </p>
 
         <div className="mt-12">
