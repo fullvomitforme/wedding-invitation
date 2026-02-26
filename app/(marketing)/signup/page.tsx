@@ -16,6 +16,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { BrandMark } from "@/components/BrandMark";
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -52,9 +53,7 @@ export default function SignUpPage() {
   return (
     <div className="flex min-h-screen flex-col bg-[#0E0E10] px-4 py-8 text-neutral-200">
       <div className="flex justify-center">
-        <div className="text-sm font-semibold uppercase tracking-[0.28em] text-neutral-500">
-          Attimo
-        </div>
+        <BrandMark />
       </div>
       <div className="flex flex-1 items-center justify-center">
         <Card className="w-full max-w-md border border-white/10 bg-neutral-900/80 text-neutral-100 backdrop-blur-sm shadow-[0_18px_60px_rgba(0,0,0,0.65)]">

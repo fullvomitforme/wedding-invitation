@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { BrandMark } from "@/components/BrandMark";
 
 export function LandingNav() {
   return (
@@ -9,9 +10,10 @@ export function LandingNav() {
     >
       <Link
         href="/"
-        className="font-serif text-lg tracking-tight text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
+        className="inline-flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
+        aria-label="Attimo home"
       >
-        Attimo
+        <BrandMark />
       </Link>
       <div className="flex items-center gap-3">
         <Link

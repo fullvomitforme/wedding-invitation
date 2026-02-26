@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { BrandMark } from "@/components/BrandMark";
 
 export const metadata: Metadata = {
   title: "Request Access — Attimo Studios",
@@ -12,9 +13,10 @@ export default function RequestAccessPage() {
       <header className="px-6 md:px-12 py-6">
         <Link
           href="/"
-          className="font-serif text-lg tracking-tight text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
+          className="inline-flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
+          aria-label="Back to Attimo home"
         >
-          Attimo
+          <BrandMark />
         </Link>
       </header>
       <main className="flex-1 flex flex-col items-center justify-center px-6 max-w-md mx-auto text-center">

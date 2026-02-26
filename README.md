@@ -18,7 +18,7 @@ A beautiful, modern wedding invitation website built with Next.js, Bun, GSAP, an
 - 📱 **Fully Responsive** – Works on all devices
 - ✨ **GSAP Animations** – Scroll-triggered animations
 - 💑 **Couple Profiles** – Bride and groom information
-- 📸 **Photo Gallery** – Precious moments
+- 📸 **Photo Gallery** – Couple and event photos
 - ⏰ **Countdown Timer** – Countdown to the big day
 - 📍 **Location** – Event locations and map links
 - ✅ **RSVP System** – Guest responses and stats (scoped by wedding)

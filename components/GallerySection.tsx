@@ -54,9 +54,9 @@ export default function GallerySection() {
 
         {imagesToUse.length === 0 ? (
           <div className="text-center py-12 bg-gray-50 rounded-2xl">
-            <p className="text-gray-500 mb-2">You haven&apos;t uploaded any gallery yet.</p>
+            <p className="text-gray-500 mb-2">No photos in the gallery yet.</p>
             <p className="text-sm text-gray-400">
-              Please upload your best moments in the <strong>Gallery Section</strong>.
+              Add photos in the dashboard <strong>Gallery</strong> section.
             </p>
           </div>
         ) : (

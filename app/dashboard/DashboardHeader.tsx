@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { BrandMark } from "@/components/BrandMark";
 import { UserProfileDropdown } from "./UserProfileDropdown";
 
 /** Placeholder that matches the profile trigger size so layout is stable until dropdown mounts (avoids hydration mismatch with Radix IDs and session). */
@@ -35,9 +36,10 @@ export function DashboardHeader() {
       <div className="flex min-w-0 items-center gap-4">
         <Link
           href="/dashboard"
-          className="shrink-0 text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400 transition-colors hover:text-neutral-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#BFA14A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0E0E10] rounded"
+          className="shrink-0 transition-colors hover:text-neutral-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#BFA14A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0E0E10] rounded"
+          aria-label="Attimo dashboard"
         >
-          Attimo
+          <BrandMark className="h-5" />
         </Link>
         <span className="hidden truncate text-sm text-neutral-500 sm:inline" aria-hidden>
           {isWeddingRoute ? "Project" : "Projects"}

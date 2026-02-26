@@ -1,8 +1,19 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { format, parseISO, isValid } from "date-fns";
+import { CalendarIcon } from "lucide-react";
 import { toast } from "sonner";
 import type { WeddingContent } from "@/lib/wedding-defaults";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+import { ImageUpload } from "@/components/ui/image-upload";
 
 type Props = {
   weddingId: string;
@@ -106,6 +117,50 @@ export function ContentForm({ weddingId, initialContent }: Props) {
     "min-h-[44px] w-full rounded-md border border-white/10 bg-white/5 px-3 py-2 text-base text-neutral-100 placeholder:text-neutral-500 outline-none focus-visible:border-[#BFA14A] focus-visible:ring-2 focus-visible:ring-[#BFA14A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#141416] transition-colors duration-200";
   const labelClass = "block text-sm font-medium text-neutral-300 mb-1";
 
+  function EventDatePicker({
+    value,
+    onChange,
+    id,
+  }: {
+    value: string;
+    onChange: (date: string) => void;
+    id: string;
+  }) {
+    const date = value && isValid(parseISO(value)) ? parseISO(value) : undefined;
+    const [open, setOpen] = useState(false);
+    return (
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <Button
+            type="button"
+            id={id}
+            variant="outline"
+            className={cn(
+              "min-h-[44px] w-full justify-start text-left font-normal border-white/10 bg-white/5 text-neutral-100 hover:bg-white/10",
+              !date && "text-neutral-500"
+            )}
+          >
+            <CalendarIcon className="mr-2 size-4" />
+            {date ? format(date, "PPP") : "Pick date"}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto p-0" align="start">
+          <Calendar
+            mode="single"
+            selected={date}
+            onSelect={(d) => {
+              if (d) {
+                onChange(format(d, "yyyy-MM-dd"));
+                setOpen(false);
+              }
+            }}
+            defaultMonth={date}
+          />
+        </PopoverContent>
+      </Popover>
+    );
+  }
+
   return (
     <form onSubmit={handleSubmit} className="space-y-8" noValidate>
       <h2 className="text-lg font-semibold text-neutral-50">Content</h2>
@@ -134,18 +189,27 @@ export function ContentForm({ weddingId, initialContent }: Props) {
             {(["name", "username", "parentInfo", "location", "image"] as const).map((field) => (
               <div key={field}>
                 <label htmlFor={`bride-${field}`} className={labelClass}>
-                  {field === "parentInfo" ? "Parent info" : field === "image" ? "Image URL" : field}
+                  {field === "parentInfo" ? "Parent info" : field === "image" ? "Photo" : field}
                 </label>
-                <input
-                  id={`bride-${field}`}
-                  name={`bride-${field}`}
-                  type={field === "image" ? "url" : "text"}
-                  value={bride[field] ?? ""}
-                  onChange={(e) => updateCouple("bride", field, e.target.value)}
-                  className={inputClass}
-                  autoComplete={field === "name" ? "name" : "off"}
-                  spellCheck={field !== "username" && field !== "image"}
-                />
+                {field === "image" ? (
+                  <ImageUpload
+                    id={`bride-${field}`}
+                    value={bride.image ?? ""}
+                    onChange={(url) => updateCouple("bride", "image", url)}
+                    uploadUrl={`/api/weddings/${weddingId}/upload`}
+                  />
+                ) : (
+                  <input
+                    id={`bride-${field}`}
+                    name={`bride-${field}`}
+                    type="text"
+                    value={bride[field] ?? ""}
+                    onChange={(e) => updateCouple("bride", field, e.target.value)}
+                    className={inputClass}
+                    autoComplete={field === "name" ? "name" : "off"}
+                    spellCheck={field !== "username"}
+                  />
+                )}
               </div>
             ))}
           </div>
@@ -154,18 +218,27 @@ export function ContentForm({ weddingId, initialContent }: Props) {
             {(["name", "username", "parentInfo", "location", "image"] as const).map((field) => (
               <div key={field}>
                 <label htmlFor={`groom-${field}`} className={labelClass}>
-                  {field === "parentInfo" ? "Parent info" : field === "image" ? "Image URL" : field}
+                  {field === "parentInfo" ? "Parent info" : field === "image" ? "Photo" : field}
                 </label>
-                <input
-                  id={`groom-${field}`}
-                  name={`groom-${field}`}
-                  type={field === "image" ? "url" : "text"}
-                  value={groom[field] ?? ""}
-                  onChange={(e) => updateCouple("groom", field, e.target.value)}
-                  className={inputClass}
-                  autoComplete={field === "name" ? "name" : "off"}
-                  spellCheck={field !== "username" && field !== "image"}
-                />
+                {field === "image" ? (
+                  <ImageUpload
+                    id={`groom-${field}`}
+                    value={groom.image ?? ""}
+                    onChange={(url) => updateCouple("groom", "image", url)}
+                    uploadUrl={`/api/weddings/${weddingId}/upload`}
+                  />
+                ) : (
+                  <input
+                    id={`groom-${field}`}
+                    name={`groom-${field}`}
+                    type="text"
+                    value={groom[field] ?? ""}
+                    onChange={(e) => updateCouple("groom", field, e.target.value)}
+                    className={inputClass}
+                    autoComplete={field === "name" ? "name" : "off"}
+                    spellCheck={field !== "username"}
+                  />
+                )}
               </div>
             ))}
           </div>
@@ -192,15 +265,23 @@ export function ContentForm({ weddingId, initialContent }: Props) {
                 <label htmlFor={`ev-${i}-${field}`} className={labelClass}>
                   {field === "mapsUrl" ? "Maps URL" : field}
                 </label>
-                <input
-                  id={`ev-${i}-${field}`}
-                  name={`ev-${i}-${field}`}
-                  type={field === "date" ? "date" : field === "mapsUrl" ? "url" : "text"}
-                  value={ev[field] ?? ""}
-                  onChange={(e) => updateEvent(i, field, e.target.value)}
-                  className={inputClass}
-                  autoComplete="off"
-                />
+                {field === "date" ? (
+                  <EventDatePicker
+                    id={`ev-${i}-${field}`}
+                    value={ev.date ?? ""}
+                    onChange={(v) => updateEvent(i, "date", v)}
+                  />
+                ) : (
+                  <input
+                    id={`ev-${i}-${field}`}
+                    name={`ev-${i}-${field}`}
+                    type={field === "mapsUrl" ? "url" : "text"}
+                    value={ev[field] ?? ""}
+                    onChange={(e) => updateEvent(i, field, e.target.value)}
+                    className={inputClass}
+                    autoComplete="off"
+                  />
+                )}
               </div>
             ))}
           </div>
