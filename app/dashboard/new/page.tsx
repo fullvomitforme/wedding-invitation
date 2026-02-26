@@ -3,6 +3,14 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function NewWeddingPage() {
   const router = useRouter();
@@ -37,29 +45,37 @@ export default function NewWeddingPage() {
 
   if (status === "loading") {
     return (
-      <div className="space-y-4">
-        <h1 className="text-xl font-semibold">New wedding</h1>
-        <p className="text-foreground/70">Creating your wedding…</p>
-      </div>
+      <Card className="border-border">
+        <CardHeader>
+          <CardTitle>New wedding</CardTitle>
+          <CardDescription>Creating your wedding…</CardDescription>
+        </CardHeader>
+      </Card>
     );
   }
 
   if (status === "error") {
     return (
-      <div className="space-y-4">
-        <h1 className="text-xl font-semibold">New wedding</h1>
-        <p className="text-red-600">{error}</p>
-        <Link href="/dashboard" className="text-sm underline">
-          ← Back to dashboard
-        </Link>
-      </div>
+      <Card className="border-border">
+        <CardHeader>
+          <CardTitle>New wedding</CardTitle>
+          <CardDescription className="text-destructive">{error}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Button variant="outline" asChild>
+            <Link href="/dashboard">← Back to dashboard</Link>
+          </Button>
+        </CardContent>
+      </Card>
     );
   }
 
   return (
-    <div className="space-y-4">
-      <h1 className="text-xl font-semibold">New wedding</h1>
-      <p className="text-foreground/70">Redirecting…</p>
-    </div>
+    <Card className="border-border">
+      <CardHeader>
+        <CardTitle>New wedding</CardTitle>
+        <CardDescription>Redirecting…</CardDescription>
+      </CardHeader>
+    </Card>
   );
 }

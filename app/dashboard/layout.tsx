@@ -1,8 +1,7 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import Link from "next/link";
-import { DashboardNav } from "./DashboardNav";
+import { DashboardHeader } from "./DashboardHeader";
 
 export default async function DashboardLayout({
   children,
@@ -18,13 +17,8 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <header className="border-b border-gray-200 px-4 py-3 flex items-center justify-between">
-        <Link href="/dashboard" className="font-semibold">
-          Dashboard
-        </Link>
-        <DashboardNav />
-      </header>
+    <div className="dark min-h-screen bg-background text-foreground">
+      <DashboardHeader />
       <main className="p-4">{children}</main>
     </div>
   );

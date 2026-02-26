@@ -9,6 +9,9 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.6.0",
     "@gsap/react": "^2.1.2",
     "@supabase/supabase-js": "^2.97.0",
     "better-auth": "^1.4.19",
@@ -17,6 +20,7 @@
     "lucide-react": "^0.575.0",
     "next": "16.1.6",
     "pg": "^8.19.0",
+    "radix-ui": "^1.4.3",
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },

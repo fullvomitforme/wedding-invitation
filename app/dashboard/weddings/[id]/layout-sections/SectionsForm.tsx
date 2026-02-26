@@ -89,18 +89,18 @@ export function SectionsForm({ weddingId, initialSections }: Props) {
         </p>
       )}
 
-      <ul className="space-y-0 rounded border border-gray-200 divide-y divide-gray-200">
+      <ul className="space-y-0 rounded-lg border border-border divide-y divide-border bg-card/80">
         {sections.map((section, index) => (
           <li
             key={section.id}
-            className="flex items-center gap-3 px-4 py-3 bg-white first:rounded-t last:rounded-b"
+            className="flex items-center gap-3 px-4 py-3 first:rounded-t-lg last:rounded-b-lg"
           >
             <div className="flex items-center gap-2 shrink-0">
               <button
                 type="button"
                 onClick={() => move(index, -1)}
                 disabled={index === 0}
-                className="min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded border border-gray-300 text-foreground hover:bg-gray-50 disabled:opacity-40 disabled:pointer-events-none focus:outline-none focus:ring-2 focus:ring-foreground/20 focus-visible:ring-2"
+                className="min-h-[40px] min-w-[40px] inline-flex items-center justify-center rounded-md border border-input bg-card text-foreground hover:bg-accent hover:text-accent-foreground disabled:opacity-40 disabled:pointer-events-none outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
                 aria-label={`Move ${SECTION_LABELS[section.id] ?? section.id} up`}
               >
                 <span aria-hidden>↑</span>
@@ -109,7 +109,7 @@ export function SectionsForm({ weddingId, initialSections }: Props) {
                 type="button"
                 onClick={() => move(index, 1)}
                 disabled={index === sections.length - 1}
-                className="min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded border border-gray-300 text-foreground hover:bg-gray-50 disabled:opacity-40 disabled:pointer-events-none focus:outline-none focus:ring-2 focus:ring-foreground/20 focus-visible:ring-2"
+                className="min-h-[40px] min-w-[40px] inline-flex items-center justify-center rounded-md border border-input bg-card text-foreground hover:bg-accent hover:text-accent-foreground disabled:opacity-40 disabled:pointer-events-none outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
                 aria-label={`Move ${SECTION_LABELS[section.id] ?? section.id} down`}
               >
                 <span aria-hidden>↓</span>
@@ -120,7 +120,7 @@ export function SectionsForm({ weddingId, initialSections }: Props) {
                 type="checkbox"
                 checked={section.enabled}
                 onChange={() => toggle(index)}
-                className="size-5 rounded border-gray-300 text-foreground focus:ring-2 focus:ring-foreground/20 focus-visible:ring-2"
+                className="size-5 rounded-md border-input bg-card text-foreground outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
                 aria-describedby={`section-desc-${section.id}`}
               />
               <span id={`section-desc-${section.id}`} className="font-medium text-foreground">

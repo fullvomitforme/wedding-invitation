@@ -134,7 +134,7 @@ export function ContentForm({ weddingId, initialContent }: Props) {
                   type={field === "image" ? "url" : "text"}
                   value={bride[field] ?? ""}
                   onChange={(e) => updateCouple("bride", field, e.target.value)}
-                  className="min-h-[44px] w-full rounded border border-gray-300 px-3 py-2 text-base text-foreground bg-white focus:outline-none focus:ring-2 focus:ring-foreground/20 focus-visible:ring-2"
+                  className="min-h-[44px] w-full rounded-md border border-input bg-card px-3 py-2 text-base text-foreground outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
                   autoComplete={field === "name" ? "name" : "off"}
                   spellCheck={field !== "username" && field !== "image"}
                 />
@@ -154,7 +154,7 @@ export function ContentForm({ weddingId, initialContent }: Props) {
                   type={field === "image" ? "url" : "text"}
                   value={groom[field] ?? ""}
                   onChange={(e) => updateCouple("groom", field, e.target.value)}
-                  className="min-h-[44px] w-full rounded border border-gray-300 px-3 py-2 text-base text-foreground bg-white focus:outline-none focus:ring-2 focus:ring-foreground/20 focus-visible:ring-2"
+                  className="min-h-[44px] w-full rounded-md border border-input bg-card px-3 py-2 text-base text-foreground outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
                   autoComplete={field === "name" ? "name" : "off"}
                   spellCheck={field !== "username" && field !== "image"}
                 />
@@ -190,7 +190,7 @@ export function ContentForm({ weddingId, initialContent }: Props) {
                   type={field === "date" ? "date" : field === "mapsUrl" ? "url" : "text"}
                   value={ev[field] ?? ""}
                   onChange={(e) => updateEvent(i, field, e.target.value)}
-                  className="min-h-[44px] w-full rounded border border-gray-300 px-3 py-2 text-base text-foreground bg-white focus:outline-none focus:ring-2 focus:ring-foreground/20 focus-visible:ring-2"
+                  className="min-h-[44px] w-full rounded-md border border-input bg-card px-3 py-2 text-base text-foreground outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
                   autoComplete="off"
                 />
               </div>

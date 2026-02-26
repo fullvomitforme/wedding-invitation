@@ -2,6 +2,14 @@ import Link from "next/link";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { createServerClient } from "@/lib/supabase";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default async function DashboardPage() {
   const session = await auth.api.getSession({
@@ -39,68 +47,63 @@ export default async function DashboardPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold">My weddings</h1>
-        <NewWeddingButton />
+        <h1 className="text-xl font-semibold text-foreground">My weddings</h1>
+        <Button asChild>
+          <Link href="/dashboard/new">New wedding</Link>
+        </Button>
       </div>
       {weddings.length === 0 ? (
-        <p className="text-foreground/70">No weddings yet. Create one to get started.</p>
+        <Card className="border-border">
+          <CardHeader>
+            <CardTitle>No weddings yet</CardTitle>
+            <CardDescription>Create one to get started.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button asChild>
+              <Link href="/dashboard/new">Create wedding</Link>
+            </Button>
+          </CardContent>
+        </Card>
       ) : (
         <ul className="space-y-3">
           {weddings.map((w) => (
-            <li
-              key={w.id}
-              className="flex items-center justify-between rounded border border-gray-200 p-3"
-            >
-              <div>
-                <span className="font-medium">{title(w)}</span>
-                {w.slug && (
-                  <span className="ml-2 text-sm text-foreground/60">
-                    {w.slug}
+            <Card key={w.id} className="border-border py-4 shadow-none">
+              <CardContent className="flex flex-col gap-3 px-6 py-0 sm:flex-row sm:items-center sm:justify-between">
+                <div className="min-w-0">
+                  <span className="font-medium text-foreground">{title(w)}</span>
+                  {w.slug && (
+                    <span className="ml-2 text-sm text-muted-foreground">
+                      {w.slug}
+                    </span>
+                  )}
+                  <span className="ml-2 text-sm capitalize text-muted-foreground">
+                    ({w.status})
                   </span>
-                )}
-                <span className="ml-2 text-sm capitalize text-foreground/60">
-                  ({w.status})
-                </span>
-              </div>
-              <div className="flex gap-2">
-                <Link
-                  href={`/dashboard/weddings/${w.id}`}
-                  className="text-sm underline"
-                >
-                  Edit
-                </Link>
-                <Link
-                  href={`/preview/${w.id}`}
-                  className="text-sm underline"
-                >
-                  Preview
-                </Link>
-                {w.status === "released" && w.slug && (
-                  <a
-                    href={`https://${w.slug}.localhost:3000`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm underline"
-                  >
-                    View site
-                  </a>
-                )}
-              </div>
-            </li>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <Button variant="outline" size="sm" asChild>
+                    <Link href={`/dashboard/weddings/${w.id}`}>Edit</Link>
+                  </Button>
+                  <Button variant="ghost" size="sm" asChild>
+                    <Link href={`/preview/${w.id}`}>Preview</Link>
+                  </Button>
+                  {w.status === "released" && w.slug && (
+                    <Button variant="ghost" size="sm" asChild>
+                      <a
+                        href={`https://${w.slug}.localhost:3000`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        View site
+                      </a>
+                    </Button>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
           ))}
         </ul>
       )}
     </div>
-  );
-}
-
-function NewWeddingButton() {
-  return (
-    <Link
-      href="/dashboard/new"
-      className="rounded bg-foreground text-background px-4 py-2 text-sm font-medium hover:opacity-90"
-    >
-      New wedding
-    </Link>
   );
 }

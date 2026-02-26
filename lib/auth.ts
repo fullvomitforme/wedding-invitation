@@ -15,6 +15,9 @@ export const auth = betterAuth({
   },
   secret: process.env.BETTER_AUTH_SECRET,
   basePath: "/api/auth",
-  baseURL: process.env.BETTER_AUTH_URL,
+  baseURL:
+    process.env.BETTER_AUTH_URL ||
+    process.env.NEXT_PUBLIC_APP_URL ||
+    (process.env.NODE_ENV === "development" ? "http://localhost:3000" : undefined),
   plugins: [nextCookies()],
 });

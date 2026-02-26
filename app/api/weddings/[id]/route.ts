@@ -135,3 +135,48 @@ export async function PATCH(
     return NextResponse.json({ error: "Failed to update wedding" }, { status: 500 });
   }
 }
+
+export async function DELETE(
+  _request: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
+  try {
+    const session = await auth.api.getSession({ headers: await headers() });
+    if (!session?.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    const { id } = await context.params;
+    const supabase = createServerClient();
+
+    // Only the owner can delete the wedding site.
+    const { data: membership } = await supabase
+      .from("wedding_collaborators")
+      .select("role")
+      .eq("wedding_id", id)
+      .eq("user_id", session.user.id)
+      .single();
+
+    if (!membership) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+    if (membership.role !== "owner") {
+      return NextResponse.json({ error: "Only the owner can delete this wedding" }, { status: 403 });
+    }
+
+    const { error: deleteError } = await supabase
+      .from("weddings")
+      .delete()
+      .eq("id", id);
+
+    if (deleteError) {
+      console.error("DELETE wedding error:", deleteError);
+      return NextResponse.json({ error: "Failed to delete wedding" }, { status: 500 });
+    }
+
+    // Related collaborators, RSVP, and wishes rows cascade via FKs.
+    return NextResponse.json({ success: true }, { status: 200 });
+  } catch (err) {
+    console.error("DELETE /api/weddings/[id]:", err);
+    return NextResponse.json({ error: "Failed to delete wedding" }, { status: 500 });
+  }
+}
