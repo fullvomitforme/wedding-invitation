@@ -16,6 +16,9 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   title: "Wedding Invitation - Our Special Day",
   description: "Join us in celebrating our special day",
+  icons: {
+    icon: "/attimo-studio-icon.svg",
+  },
 };
 
 export default function RootLayout({
