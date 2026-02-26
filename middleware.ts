@@ -1,16 +1,25 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const MAIN_HOSTS = new Set(["localhost", "127.0.0.1"]);
+const MAIN_HOSTS = new Set([
+  "localhost",
+  "127.0.0.1",
+  // SaaS root domains (marketing + dashboard), no wedding slug here
+  "attimostudios.heulaulab.tech",
+  "attimo-studios.vercel.app",
+]);
 
 function getSubdomainSlug(host: string): string | null {
   const portStripped = host.replace(/:\d+$/, "");
+
+  // If this is one of our main hosts, never treat it as a wedding slug domain.
+  if (MAIN_HOSTS.has(portStripped.toLowerCase())) return null;
+
   const parts = portStripped.split(".");
   if (parts.length < 2) return null;
   const first = parts[0]?.toLowerCase();
   if (!first || first === "www") return null;
-  const isMainDomain = MAIN_HOSTS.has(parts[parts.length - 1] ?? "") && parts.length <= 2;
-  if (isMainDomain && (parts[0] === "localhost" || parts[0] === "127.0.0.1")) return null;
+
   return first;
 }
 
