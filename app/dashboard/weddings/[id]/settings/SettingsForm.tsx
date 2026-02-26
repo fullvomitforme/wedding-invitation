@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const SLUG_REGEX = /^[a-z0-9-]+$/;
 const SLUG_MIN = 2;
@@ -72,13 +73,17 @@ export function SettingsForm({ weddingId, initialSlug, initialStatus }: Props) {
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
-        setError(data.error ?? "Failed to release");
+        const msg = data.error ?? "Failed to release";
+        setError(msg);
+        toast.error(msg);
         setReleasing(false);
         return;
       }
       setReleased(true);
+      toast.success("Project released.");
     } catch {
       setError("Failed to release");
+      toast.error("Failed to release");
     } finally {
       setReleasing(false);
     }
@@ -112,13 +117,17 @@ export function SettingsForm({ weddingId, initialSlug, initialStatus }: Props) {
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
-        setDeleteError(data.error ?? "Failed to delete wedding");
+        const msg = data.error ?? "Failed to delete wedding";
+        setDeleteError(msg);
+        toast.error(msg);
         setDeleting(false);
         return;
       }
+      toast.success("Project deleted.");
       router.push("/dashboard");
     } catch {
       setDeleteError("Failed to delete wedding");
+      toast.error("Failed to delete wedding");
       setDeleting(false);
     }
   };

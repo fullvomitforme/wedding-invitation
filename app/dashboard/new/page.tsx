@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 
 export default function NewWeddingPage() {
@@ -24,11 +25,14 @@ export default function NewWeddingPage() {
       if (cancelled) return;
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
-        setError(data.error ?? "Failed to create wedding");
+        const msg = data.error ?? "Failed to create wedding";
+        setError(msg);
+        toast.error(msg);
         setStatus("error");
         return;
       }
       const data = (await res.json()) as { id: string };
+      toast.success("Project created.");
       router.replace(`/dashboard/weddings/${data.id}`);
     })();
     return () => {

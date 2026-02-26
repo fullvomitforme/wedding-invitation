@@ -10,6 +10,17 @@ const pool = connectionString ? new Pool({ connectionString }) : undefined;
 
 export const auth = betterAuth({
   database: pool,
+  databaseHooks: {
+    user: {
+      create: {
+        before: async (user) => {
+          // Normalize email to lowercase so sign-in and sign-up always match (avoids "cannot login with same email").
+          const email = typeof user.email === "string" ? user.email.trim().toLowerCase() : "";
+          return { data: { ...user, email } };
+        },
+      },
+    },
+  },
   emailAndPassword: {
     enabled: true,
   },

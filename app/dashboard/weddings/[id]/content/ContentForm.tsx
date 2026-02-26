@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { toast } from "sonner";
 import type { WeddingContent } from "@/lib/wedding-defaults";
 
 type Props = {
@@ -29,12 +30,15 @@ export function ContentForm({ weddingId, initialContent }: Props) {
       setSaving(false);
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
-        setError(data.error ?? "Failed to save");
+        const msg = data.error ?? "Failed to save";
+        setError(msg);
+        toast.error(msg);
         return;
       }
       const data = await res.json();
       setContent(data.content ?? content);
       setSaved(true);
+      toast.success("Content saved.");
       setTimeout(() => setSaved(false), 2000);
     },
     [weddingId, content]

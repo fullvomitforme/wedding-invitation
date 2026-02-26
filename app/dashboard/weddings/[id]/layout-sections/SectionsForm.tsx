@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { toast } from "sonner";
 import type { SectionConfig } from "@/lib/wedding-defaults";
 
 const SECTION_LABELS: Record<string, string> = {
@@ -41,12 +42,15 @@ export function SectionsForm({ weddingId, initialSections }: Props) {
       setSaving(false);
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
-        setError(data.error ?? "Failed to save");
+        const msg = data.error ?? "Failed to save";
+        setError(msg);
+        toast.error(msg);
         return;
       }
       const data = await res.json();
       setSections([...(data.sections ?? next)].sort((a: SectionConfig, b: SectionConfig) => a.order - b.order));
       setSaved(true);
+      toast.success("Layout saved.");
       setTimeout(() => setSaved(false), 2000);
     },
     [weddingId]

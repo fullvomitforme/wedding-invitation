@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -28,18 +29,24 @@ export default function SignUpPage() {
     e.preventDefault();
     setError(null);
     setLoading(true);
+    const normalizedEmail = email.trim().toLowerCase();
     const { data, error: err } = await authClient.signUp.email({
-      email,
+      email: normalizedEmail,
       password,
       name: name.trim() || "Guest",
       callbackURL: "/dashboard",
     });
     setLoading(false);
     if (err) {
-      setError(err.message ?? "Sign up failed");
+      const msg = err.message ?? "Sign up failed";
+      setError(msg);
+      toast.error(msg);
       return;
     }
-    if (data) router.push("/dashboard");
+    if (data) {
+      toast.success("Account created.");
+      router.push("/dashboard");
+    }
   }
 
   return (
