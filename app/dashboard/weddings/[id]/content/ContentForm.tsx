@@ -98,34 +98,38 @@ export function ContentForm({ weddingId, initialContent }: Props) {
   const groom = content.couple?.groom ?? { name: "", username: "", parentInfo: "", location: "" };
   const events = content.events ?? [];
 
+  const inputClass =
+    "min-h-[44px] w-full rounded-md border border-white/10 bg-white/5 px-3 py-2 text-base text-neutral-100 placeholder:text-neutral-500 outline-none focus-visible:border-[#BFA14A] focus-visible:ring-2 focus-visible:ring-[#BFA14A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#141416] transition-colors duration-200";
+  const labelClass = "block text-sm font-medium text-neutral-300 mb-1";
+
   return (
     <form onSubmit={handleSubmit} className="space-y-8" noValidate>
-      <h2 className="text-lg font-semibold text-foreground">Content</h2>
+      <h2 className="text-lg font-semibold text-neutral-50">Content</h2>
 
       {error && (
-        <div className="rounded border border-red-200 bg-red-50 p-3 text-sm text-red-800" role="alert">
+        <div className="rounded-md border border-red-500/40 bg-red-500/10 px-3 py-2 text-sm text-red-300" role="alert">
           {error}
         </div>
       )}
       {fieldErrors.couple && (
-        <p id="content-couple-error" className="text-sm text-red-600" role="alert">
+        <p id="content-couple-error" className="text-sm text-red-300" role="alert">
           {fieldErrors.couple}
         </p>
       )}
       {saved && (
-        <p className="text-sm text-green-700" role="status" aria-live="polite">
+        <p className="text-sm text-neutral-400" role="status" aria-live="polite">
           Saved.
         </p>
       )}
 
       <fieldset className="space-y-4" aria-describedby={fieldErrors.couple ? "content-couple-error" : undefined}>
-        <legend className="text-base font-medium text-foreground">Couple</legend>
+        <legend className="text-base font-medium text-neutral-200">Couple</legend>
         <div className="grid gap-6 sm:grid-cols-2">
           <div className="space-y-3">
-            <h3 className="text-sm font-medium text-foreground/80">Bride</h3>
+            <h3 className="text-sm font-medium text-neutral-400">Bride</h3>
             {(["name", "username", "parentInfo", "location", "image"] as const).map((field) => (
               <div key={field}>
-                <label htmlFor={`bride-${field}`} className="block text-sm font-medium text-foreground mb-1">
+                <label htmlFor={`bride-${field}`} className={labelClass}>
                   {field === "parentInfo" ? "Parent info" : field === "image" ? "Image URL" : field}
                 </label>
                 <input
@@ -134,7 +138,7 @@ export function ContentForm({ weddingId, initialContent }: Props) {
                   type={field === "image" ? "url" : "text"}
                   value={bride[field] ?? ""}
                   onChange={(e) => updateCouple("bride", field, e.target.value)}
-                  className="min-h-[44px] w-full rounded-md border border-input bg-card px-3 py-2 text-base text-foreground outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                  className={inputClass}
                   autoComplete={field === "name" ? "name" : "off"}
                   spellCheck={field !== "username" && field !== "image"}
                 />
@@ -142,10 +146,10 @@ export function ContentForm({ weddingId, initialContent }: Props) {
             ))}
           </div>
           <div className="space-y-3">
-            <h3 className="text-sm font-medium text-foreground/80">Groom</h3>
+            <h3 className="text-sm font-medium text-neutral-400">Groom</h3>
             {(["name", "username", "parentInfo", "location", "image"] as const).map((field) => (
               <div key={field}>
-                <label htmlFor={`groom-${field}`} className="block text-sm font-medium text-foreground mb-1">
+                <label htmlFor={`groom-${field}`} className={labelClass}>
                   {field === "parentInfo" ? "Parent info" : field === "image" ? "Image URL" : field}
                 </label>
                 <input
@@ -154,7 +158,7 @@ export function ContentForm({ weddingId, initialContent }: Props) {
                   type={field === "image" ? "url" : "text"}
                   value={groom[field] ?? ""}
                   onChange={(e) => updateCouple("groom", field, e.target.value)}
-                  className="min-h-[44px] w-full rounded-md border border-input bg-card px-3 py-2 text-base text-foreground outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                  className={inputClass}
                   autoComplete={field === "name" ? "name" : "off"}
                   spellCheck={field !== "username" && field !== "image"}
                 />
@@ -165,15 +169,15 @@ export function ContentForm({ weddingId, initialContent }: Props) {
       </fieldset>
 
       <fieldset className="space-y-4">
-        <legend className="text-base font-medium text-foreground">Events</legend>
+        <legend className="text-base font-medium text-neutral-200">Events</legend>
         {events.map((ev, i) => (
-          <div key={i} className="rounded border border-gray-200 p-4 space-y-3">
+          <div key={i} className="rounded-md border border-white/10 p-4 space-y-3">
             <div className="flex justify-between items-center">
-              <span className="text-sm font-medium text-foreground/80">Event {i + 1}</span>
+              <span className="text-sm font-medium text-neutral-400">Event {i + 1}</span>
               <button
                 type="button"
                 onClick={() => removeEvent(i)}
-                className="min-h-[44px] min-w-[44px] inline-flex items-center justify-center text-sm text-red-600 hover:underline focus:outline-none focus:ring-2 focus:ring-red-500/30 focus-visible:ring-2 rounded"
+                className="min-h-[44px] min-w-[44px] inline-flex items-center justify-center text-sm text-red-400 hover:text-red-300 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BFA14A] rounded"
                 aria-label={`Remove event ${i + 1}`}
               >
                 Remove
@@ -181,7 +185,7 @@ export function ContentForm({ weddingId, initialContent }: Props) {
             </div>
             {(["title", "date", "time", "location", "address", "mapsUrl"] as const).map((field) => (
               <div key={field}>
-                <label htmlFor={`ev-${i}-${field}`} className="block text-sm font-medium text-foreground mb-1">
+                <label htmlFor={`ev-${i}-${field}`} className={labelClass}>
                   {field === "mapsUrl" ? "Maps URL" : field}
                 </label>
                 <input
@@ -190,7 +194,7 @@ export function ContentForm({ weddingId, initialContent }: Props) {
                   type={field === "date" ? "date" : field === "mapsUrl" ? "url" : "text"}
                   value={ev[field] ?? ""}
                   onChange={(e) => updateEvent(i, field, e.target.value)}
-                  className="min-h-[44px] w-full rounded-md border border-input bg-card px-3 py-2 text-base text-foreground outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                  className={inputClass}
                   autoComplete="off"
                 />
               </div>
@@ -200,7 +204,7 @@ export function ContentForm({ weddingId, initialContent }: Props) {
         <button
           type="button"
           onClick={addEvent}
-          className="min-h-[44px] px-4 py-2 rounded border border-dashed border-gray-400 text-sm font-medium text-foreground hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-foreground/20 focus-visible:ring-2"
+          className="min-h-[44px] px-4 py-2 rounded-md border border-dashed border-white/10 text-sm font-medium text-neutral-200 hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BFA14A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#141416] transition-colors duration-200"
         >
           Add event
         </button>
@@ -210,7 +214,7 @@ export function ContentForm({ weddingId, initialContent }: Props) {
         <button
           type="submit"
           disabled={saving}
-          className="min-h-[44px] px-5 py-2 rounded bg-foreground text-background font-medium hover:opacity-90 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-foreground/30 focus-visible:ring-2 inline-flex items-center gap-2"
+          className="min-h-[44px] px-5 py-2 rounded-md bg-neutral-100 text-[#0E0E10] font-medium hover:bg-neutral-200 disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BFA14A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#141416] transition-colors duration-200 inline-flex items-center gap-2"
         >
           {saving ? (
             <>

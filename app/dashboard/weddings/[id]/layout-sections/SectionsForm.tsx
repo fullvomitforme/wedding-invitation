@@ -71,36 +71,39 @@ export function SectionsForm({ weddingId, initialSections }: Props) {
     save(reordered);
   };
 
+  const btnClass =
+    "min-h-[40px] min-w-[40px] inline-flex items-center justify-center rounded-md border border-white/10 bg-white/5 text-neutral-200 hover:bg-white/10 disabled:opacity-40 disabled:pointer-events-none outline-none focus-visible:ring-2 focus-visible:ring-[#BFA14A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#141416] transition-colors duration-200";
+
   return (
     <div className="space-y-6">
-      <h2 className="text-lg font-semibold text-foreground">Layout</h2>
-      <p className="text-sm text-foreground/70">
+      <h2 className="text-lg font-semibold text-neutral-50">Layout</h2>
+      <p className="text-sm text-neutral-400">
         Turn sections on or off and change their order on the invitation.
       </p>
 
       {error && (
-        <div className="rounded border border-red-200 bg-red-50 p-3 text-sm text-red-800" role="alert">
+        <div className="rounded-md border border-red-500/40 bg-red-500/10 px-3 py-2 text-sm text-red-300" role="alert">
           {error}
         </div>
       )}
       {saved && (
-        <p className="text-sm text-green-700" role="status" aria-live="polite">
+        <p className="text-sm text-neutral-400" role="status" aria-live="polite">
           Saved.
         </p>
       )}
 
-      <ul className="space-y-0 rounded-lg border border-border divide-y divide-border bg-card/80">
+      <ul className="space-y-0 rounded-md border border-white/6 divide-y divide-white/6 bg-[#0E0E10]/50">
         {sections.map((section, index) => (
           <li
             key={section.id}
-            className="flex items-center gap-3 px-4 py-3 first:rounded-t-lg last:rounded-b-lg"
+            className="flex items-center gap-3 px-4 py-3 first:rounded-t-md last:rounded-b-md hover:bg-white/2"
           >
             <div className="flex items-center gap-2 shrink-0">
               <button
                 type="button"
                 onClick={() => move(index, -1)}
                 disabled={index === 0}
-                className="min-h-[40px] min-w-[40px] inline-flex items-center justify-center rounded-md border border-input bg-card text-foreground hover:bg-accent hover:text-accent-foreground disabled:opacity-40 disabled:pointer-events-none outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                className={btnClass}
                 aria-label={`Move ${SECTION_LABELS[section.id] ?? section.id} up`}
               >
                 <span aria-hidden>↑</span>
@@ -109,7 +112,7 @@ export function SectionsForm({ weddingId, initialSections }: Props) {
                 type="button"
                 onClick={() => move(index, 1)}
                 disabled={index === sections.length - 1}
-                className="min-h-[40px] min-w-[40px] inline-flex items-center justify-center rounded-md border border-input bg-card text-foreground hover:bg-accent hover:text-accent-foreground disabled:opacity-40 disabled:pointer-events-none outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                className={btnClass}
                 aria-label={`Move ${SECTION_LABELS[section.id] ?? section.id} down`}
               >
                 <span aria-hidden>↓</span>
@@ -120,10 +123,10 @@ export function SectionsForm({ weddingId, initialSections }: Props) {
                 type="checkbox"
                 checked={section.enabled}
                 onChange={() => toggle(index)}
-                className="size-5 rounded-md border-input bg-card text-foreground outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                className="size-5 rounded border-white/10 bg-white/5 text-[#BFA14A] outline-none focus-visible:ring-2 focus-visible:ring-[#BFA14A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#141416]"
                 aria-describedby={`section-desc-${section.id}`}
               />
-              <span id={`section-desc-${section.id}`} className="font-medium text-foreground">
+              <span id={`section-desc-${section.id}`} className="font-medium text-neutral-200">
                 {SECTION_LABELS[section.id] ?? section.id}
               </span>
             </label>
@@ -132,7 +135,7 @@ export function SectionsForm({ weddingId, initialSections }: Props) {
       </ul>
 
       {saving && (
-        <p className="text-sm text-foreground/70 flex items-center gap-2" aria-live="polite">
+        <p className="text-sm text-neutral-400 flex items-center gap-2" aria-live="polite">
           <span className="inline-block size-4 animate-spin rounded-full border-2 border-current border-t-transparent" aria-hidden />
           Saving…
         </p>

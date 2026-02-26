@@ -15,11 +15,10 @@ export default async function DashboardLayout({
   if (!session?.user) {
     redirect("/login");
   }
-
   return (
-    <div className="dark min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-[#0E0E10] text-neutral-100">
       <DashboardHeader />
-      <main className="p-4">{children}</main>
+      <main className="flex-1 px-4 py-4 sm:px-6 sm:py-6">{children}</main>
     </div>
   );
 }

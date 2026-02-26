@@ -4,13 +4,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 
 export default function NewWeddingPage() {
   const router = useRouter();
@@ -45,37 +38,29 @@ export default function NewWeddingPage() {
 
   if (status === "loading") {
     return (
-      <Card className="border-border">
-        <CardHeader>
-          <CardTitle>New wedding</CardTitle>
-          <CardDescription>Creating your wedding…</CardDescription>
-        </CardHeader>
-      </Card>
+      <div className="rounded-md border border-white/6 bg-[#141416] px-6 py-6">
+        <h2 className="text-lg font-semibold text-neutral-50">New wedding</h2>
+        <p className="text-sm text-neutral-400 mt-1">Creating your wedding…</p>
+      </div>
     );
   }
 
   if (status === "error") {
     return (
-      <Card className="border-border">
-        <CardHeader>
-          <CardTitle>New wedding</CardTitle>
-          <CardDescription className="text-destructive">{error}</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Button variant="outline" asChild>
-            <Link href="/dashboard">← Back to dashboard</Link>
-          </Button>
-        </CardContent>
-      </Card>
+      <div className="rounded-md border border-white/6 bg-[#141416] px-6 py-6 space-y-4">
+        <h2 className="text-lg font-semibold text-neutral-50">New wedding</h2>
+        <p className="text-sm text-red-300" role="alert">{error}</p>
+        <Button variant="outline" asChild className="border-white/10 text-neutral-200 hover:bg-white/5 focus-visible:ring-[#BFA14A]">
+          <Link href="/dashboard">← Back to dashboard</Link>
+        </Button>
+      </div>
     );
   }
 
   return (
-    <Card className="border-border">
-      <CardHeader>
-        <CardTitle>New wedding</CardTitle>
-        <CardDescription>Redirecting…</CardDescription>
-      </CardHeader>
-    </Card>
+    <div className="rounded-md border border-white/6 bg-[#141416] px-6 py-6">
+      <h2 className="text-lg font-semibold text-neutral-50">New wedding</h2>
+      <p className="text-sm text-neutral-400 mt-1">Redirecting…</p>
+    </div>
   );
 }
