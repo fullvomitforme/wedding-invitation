@@ -52,14 +52,14 @@ export default async function DashboardPage() {
             asChild
             variant="outline"
             size="sm"
-            className="h-8 rounded-md border-border-subtle bg-transparent px-3 text-xs text-text-secondary hover:bg-surface-tertiary hover:text-text-primary focus-visible:ring-[#BFA14A]"
+            className="h-8 rounded-md border-border-subtle bg-transparent px-3 text-xs text-text-secondary hover:bg-surface-tertiary hover:text-text-primary focus-visible:ring-action-primary"
           >
             <Link href="/dashboard">All projects</Link>
           </Button>
           <Button
             asChild
             size="sm"
-            className="h-8 rounded-md bg-text-inverse px-3 text-xs font-medium text-[#0E0E10] hover:bg-neutral-200 focus-visible:ring-2 focus-visible:ring-[#BFA14A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0E0E10]"
+            className="h-8 rounded-md bg-text-inverse px-3 text-xs font-medium text-text-inverse hover:bg-text-secondary focus-visible:ring-2 focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-[#0E0E10]"
           >
             <Link href="/dashboard/new">New Wedding</Link>
           </Button>
@@ -75,7 +75,7 @@ export default async function DashboardPage() {
           <Button
             asChild
             size="sm"
-            className="mt-4 h-8 rounded-md bg-text-inverse px-3 text-xs font-medium text-[#0E0E10] hover:bg-neutral-200 focus-visible:ring-2 focus-visible:ring-[#BFA14A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#141416]"
+            className="mt-4 h-8 rounded-md bg-text-inverse px-3 text-xs font-medium text-text-inverse hover:bg-text-secondary focus-visible:ring-2 focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-[#141416]"
           >
             <Link href="/dashboard/new">Create project</Link>
           </Button>
@@ -136,13 +136,13 @@ export default async function DashboardPage() {
                         <div className="flex justify-end gap-2">
                           <Link
                             href={`/dashboard/weddings/${w.id}`}
-                            className="rounded px-2 py-1 text-overline text-text-secondary underline-offset-4 hover:text-text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#BFA14A]"
+                            className="rounded px-2 py-1 text-overline text-text-secondary underline-offset-4 hover:text-text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-action-primary"
                           >
                             Edit
                           </Link>
                           <Link
                             href={`/preview/${w.id}`}
-                            className="rounded px-2 py-1 text-overline text-text-secondary underline-offset-4 hover:text-text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#BFA14A]"
+                            className="rounded px-2 py-1 text-overline text-text-secondary underline-offset-4 hover:text-text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-action-primary"
                           >
                             Preview
                           </Link>
@@ -151,7 +151,7 @@ export default async function DashboardPage() {
                               href={`https://${w.slug}.localhost:3000`}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="rounded px-2 py-1 text-overline font-medium text-text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#BFA14A]"
+                              className="rounded px-2 py-1 text-overline font-medium text-text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-action-primary"
                             >
                               View site
                             </a>
