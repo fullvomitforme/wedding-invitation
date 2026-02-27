@@ -24,6 +24,14 @@
   --text-tertiary: #CFCFD2;
   --text-inverse: #F5F4F1;
 
+  /* Border Tokens (light theme) */
+  --border-default: #CFCFD2;
+  --border-subtle: #E8E7E4;
+
+  /* Interactive Tokens */
+  --action-primary: #BFA14A;
+  --action-hover: #A68A40;
+
   /* Backward compatibility - keep existing */
   --background: #f5f4f1;
   --foreground: #0e0e10;
