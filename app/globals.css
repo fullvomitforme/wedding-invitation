@@ -169,8 +169,27 @@
 }
 
 @theme inline {
+  /* Colors - Semantic Tokens */
+  --color-surface-primary: var(--surface-primary);
+  --color-surface-secondary: var(--surface-secondary);
+  --color-surface-tertiary: var(--surface-tertiary);
+  --color-surface-auth: var(--surface-auth);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+  --color-text-inverse: var(--text-inverse);
+
+  --color-border-default: var(--border-default);
+  --color-border-subtle: var(--border-subtle);
+
+  --color-action-primary: var(--action-primary);
+  --color-action-hover: var(--action-hover);
+
+  /* Backward compatibility */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-auth-surface: var(--auth-surface);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-primary: var(--primary);
