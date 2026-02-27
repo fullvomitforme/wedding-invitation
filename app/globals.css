@@ -54,6 +54,27 @@
 }
 
 .dark {
+  /* Semantic Surface Tokens (dark theme) */
+  --surface-primary: #141416;
+  --surface-secondary: #1A1A1C;
+  --surface-tertiary: #2A2A2E;
+  --surface-auth: #141416;
+
+  /* Semantic Text Tokens (dark theme) */
+  --text-primary: #F5F4F1;
+  --text-secondary: #CFCFD2;
+  --text-tertiary: #6B6B6E;
+  --text-inverse: #0E0E10;
+
+  /* Border Tokens (dark theme) */
+  --border-default: #3A3A3E;
+  --border-subtle: #2A2A2E;
+
+  /* Interactive Tokens (dark theme - same as light) */
+  --action-primary: #BFA14A;
+  --action-hover: #A68A40;
+
+  /* Backward compatibility - keep existing */
   --background: #141416;
   --foreground: #f5f4f1;
   --muted: #2a2a2e;
