@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
+import { LenisProvider } from "@/components/LenisProvider";
 import "./globals.css";
 
 const inter = Inter({
@@ -16,9 +17,6 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   title: "Wedding Invitation - Our Special Day",
   description: "Join us in celebrating our special day",
-  icons: {
-    icon: "/attimo-studio-icon.svg",
-  },
 };
 
 export default function RootLayout({
@@ -31,8 +29,10 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${playfair.variable} antialiased`}
       >
-        {children}
-        <Toaster />
+        <LenisProvider>
+          {children}
+          <Toaster />
+        </LenisProvider>
       </body>
     </html>
   );
