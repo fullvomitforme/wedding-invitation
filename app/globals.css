@@ -5,8 +5,17 @@
 /* 8pt spacing, 8–12px radius, 1px borders, minimal shadow */
 
 :root {
+  /* Core Brand Colors (unchanged from VISUAL_DIRECTION.md) */
+  --color-charcoal: #0E0E10;
+  --color-soft-black: #141416;
+  --color-ivory: #F5F4F1;
+  --color-muted-silver: #CFCFD2;
+  --color-deep-gold: #BFA14A;
+
+  /* Backward compatibility - keep existing */
   --background: #f5f4f1;
   --foreground: #0e0e10;
+  --auth-surface: #0e0e10;
   --muted: #e8e7e4;
   --muted-foreground: #6b6b6e;
   --primary: #bfa14a;
