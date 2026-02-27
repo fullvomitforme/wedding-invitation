@@ -205,6 +205,26 @@
   --color-card-foreground: var(--card-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
+
+  /* Typography */
+  --font-heading: var(--font-heading);
+  --font-body: var(--font-body);
+
+  --text-display-lg: var(--text-display-lg);
+  --text-display-md: var(--text-display-md);
+  --text-h1: var(--text-h1);
+  --text-h2: var(--text-h2);
+  --text-h3: var(--text-h3);
+  --text-h4: var(--text-h4);
+  --text-h5: var(--text-h5);
+  --text-h6: var(--text-h6);
+  --text-body-lg: var(--text-body-lg);
+  --text-body: var(--text-body);
+  --text-body-sm: var(--text-body-sm);
+  --text-caption: var(--text-caption);
+  --text-overline: var(--text-overline);
+  --text-label: var(--text-label);
+
   --font-sans: var(--font-inter);
   --font-serif: var(--font-playfair);
   --radius-sm: 0.375rem;   /* 6px */
