@@ -49,17 +49,17 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#0E0E10] px-4 py-8 text-neutral-200">
+    <div className="flex min-h-screen flex-col bg-surface-auth px-4 py-8 text-text-inverse">
       <div className="flex justify-center">
         <BrandMark />
       </div>
       <div className="flex flex-1 items-center justify-center">
-        <Card className="w-full max-w-md border border-white/10 bg-neutral-900/80 text-neutral-100 backdrop-blur-sm shadow-[0_18px_60px_rgba(0,0,0,0.65)]">
+        <Card className="w-full max-w-md border border-border-subtle bg-surface-secondary/80 text-text-primary backdrop-blur-sm shadow-lg">
           <CardHeader className="space-y-3">
-            <CardTitle className="font-serif text-3xl tracking-tight text-neutral-50">
+            <CardTitle className="font-serif text-display-md tracking-tight text-text-primary">
               Access the Platform.
             </CardTitle>
-            <CardDescription className="text-sm text-neutral-300">
+            <CardDescription className="text-sm text-text-secondary">
               Structured systems for digital moments.
             </CardDescription>
           </CardHeader>
@@ -83,7 +83,7 @@ export default function LoginPage() {
                   required
                   autoComplete="email"
                   placeholder="you@example.com"
-                  className="border border-white/10 bg-transparent text-neutral-100 placeholder:text-neutral-500 transition-[border-color,box-shadow,background-color] duration-250 ease-out focus-visible:border-[#BFA14A] focus-visible:bg-white/2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#BFA14A]"
+                  className="border border-border-subtle bg-transparent text-text-primary placeholder:text-text-tertiary"
                 />
               </div>
               <div className="space-y-2">
@@ -96,22 +96,22 @@ export default function LoginPage() {
                   required
                   autoComplete="current-password"
                   placeholder="••••••••"
-                  className="border border-white/10 bg-transparent text-neutral-100 placeholder:text-neutral-500 transition-[border-color,box-shadow,background-color] duration-250 ease-out focus-visible:border-[#BFA14A] focus-visible:bg-white/2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#BFA14A]"
+                  className="border border-border-subtle bg-transparent text-text-primary placeholder:text-text-tertiary"
                 />
               </div>
             </CardContent>
             <CardFooter className="flex flex-col gap-4">
               <Button
                 type="submit"
-                className="w-full bg-neutral-100 text-[#0E0E10] transition-colors duration-250 ease-out hover:bg-neutral-200 disabled:opacity-70 disabled:hover:bg-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#BFA14A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0E0E10]"
+                className="w-full bg-text-inverse text-text-primary hover:bg-text-secondary disabled:opacity-70 focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface-auth"
                 disabled={loading}
               >
                 {loading ? "Signing in…" : "Enter Attimo"}
               </Button>
-              <div className="flex items-center justify-between text-xs text-neutral-500">
+              <div className="flex items-center justify-between text-caption text-text-tertiary">
                 <Link
                   href="/forgot-password"
-                  className="underline-offset-4 transition-colors duration-250 ease-out hover:text-neutral-300 hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#BFA14A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0E0E10]"
+                  className="text-action-primary underline-offset-4 hover:underline focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface-auth"
                 >
                   Forgot password?
                 </Link>
@@ -119,7 +119,7 @@ export default function LoginPage() {
                   <span className="hidden sm:inline">Need access?</span>{" "}
                   <Link
                     href="/signup"
-                    className="underline-offset-4 transition-colors duration-250 ease-out hover:text-neutral-300 hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#BFA14A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0E0E10]"
+                    className="text-action-primary underline-offset-4 hover:underline focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface-auth"
                   >
                     Sign up
                   </Link>
