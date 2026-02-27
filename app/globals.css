@@ -225,11 +225,41 @@
   --text-overline: var(--text-overline);
   --text-label: var(--text-label);
 
-  --font-sans: var(--font-inter);
-  --font-serif: var(--font-playfair);
-  --radius-sm: 0.375rem;   /* 6px */
-  --radius-md: 0.5rem;     /* 8px */
-  --radius-lg: 0.75rem;    /* 12px */
+  /* Spacing */
+  --space-0: var(--space-0);
+  --space-1: var(--space-1);
+  --space-2: var(--space-2);
+  --space-3: var(--space-3);
+  --space-4: var(--space-4);
+  --space-5: var(--space-5);
+  --space-6: var(--space-6);
+  --space-8: var(--space-8);
+  --space-10: var(--space-10);
+  --space-12: var(--space-12);
+  --space-16: var(--space-16);
+  --space-20: var(--space-20);
+  --space-24: var(--space-24);
+
+  /* Border Radius */
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-full: var(--radius-full);
+
+  /* Shadows */
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-xl: var(--shadow-xl);
+
+  /* Z-Index */
+  --z-dropdown: var(--z-dropdown);
+  --z-sticky: var(--z-sticky);
+  --z-fixed: var(--z-fixed);
+  --z-modal-backdrop: var(--z-modal-backdrop);
+  --z-modal: var(--z-modal);
+  --z-popover: var(--z-popover);
+  --z-tooltip: var(--z-tooltip);
 }
 
 body {
