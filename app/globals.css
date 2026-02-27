@@ -12,6 +12,12 @@
   --color-muted-silver: #CFCFD2;
   --color-deep-gold: #BFA14A;
 
+  /* Semantic Surface Tokens (light theme) */
+  --surface-primary: #F5F4F1;
+  --surface-secondary: #FFFFFF;
+  --surface-tertiary: #E8E7E4;
+  --surface-auth: #141416;
+
   /* Backward compatibility - keep existing */
   --background: #f5f4f1;
   --foreground: #0e0e10;
