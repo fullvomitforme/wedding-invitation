@@ -18,6 +18,12 @@
   --surface-tertiary: #E8E7E4;
   --surface-auth: #141416;
 
+  /* Semantic Text Tokens (light theme) */
+  --text-primary: #0E0E10;
+  --text-secondary: #6B6B6E;
+  --text-tertiary: #CFCFD2;
+  --text-inverse: #F5F4F1;
+
   /* Backward compatibility - keep existing */
   --background: #f5f4f1;
   --foreground: #0e0e10;
