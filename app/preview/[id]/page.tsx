@@ -2,7 +2,7 @@ import { redirect, notFound } from "next/navigation";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 import { createServerClient } from "@/lib/supabase";
-import { ClassicTemplate } from "@/app/invitation/ClassicTemplate";
+import { getTemplateComponent } from "@/lib/templates";
 import type { SectionConfig } from "@/components/InvitationContext";
 
 export default async function PreviewPage({
@@ -31,10 +31,11 @@ export default async function PreviewPage({
   if (error || !wedding) notFound();
 
   const sections = (Array.isArray(wedding.sections) ? wedding.sections : []) as SectionConfig[];
-  const content = (wedding.content ?? {}) as Parameters<typeof ClassicTemplate>[0]["content"];
+  const content = (wedding.content ?? {}) as any;
+  const TemplateComponent = getTemplateComponent(wedding.template_id ?? "classic");
 
   return (
-    <ClassicTemplate
+    <TemplateComponent
       weddingId={wedding.id}
       content={content}
       sections={sections}

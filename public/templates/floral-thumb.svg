@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 225" width="400" height="225">
+  <!-- Soft pastel background -->
+  <rect width="400" height="225" fill="#faf8f3"/>
+  
+  <!-- Decorative organic shapes -->
+  <circle cx="80" cy="60" r="25" fill="#f4d1ae" opacity="0.4"/>
+  <circle cx="320" cy="165" r="30" fill="#e8c4c4" opacity="0.3"/>
+  <ellipse cx="350" cy="50" rx="20" ry="35" fill="#d4c5b9" opacity="0.3"/>
+  <ellipse cx="50" cy="180" rx="35" ry="20" fill="#c9b8a8" opacity="0.3"/>
+  
+  <!-- Floral decorative element -->
+  <path d="M 200 80 Q 210 70, 220 80 Q 210 90, 200 80" fill="#e8b4a0" opacity="0.5"/>
+  <path d="M 200 80 Q 190 70, 180 80 Q 190 90, 200 80" fill="#e8b4a0" opacity="0.5"/>
+  
+  <!-- Typography -->
+  <text x="200" y="130" font-family="serif" font-size="26" fill="#8b7355" text-anchor="middle" font-weight="500">Floral</text>
+  <text x="200" y="155" font-family="serif" font-size="13" fill="#a68b6b" text-anchor="middle">Soft &amp; Organic</text>
+  
+  <!-- Decorative line -->
+  <path d="M 130 170 Q 200 175, 270 170" stroke="#d4c5b9" stroke-width="2" fill="none"/>
+</svg>

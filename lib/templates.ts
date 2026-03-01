@@ -1,3 +1,4 @@
+import type React from "react";
 import { ClassicTemplate } from "@/app/invitation/ClassicTemplate";
 import { ModernTemplate } from "@/app/invitation/templates/ModernTemplate";
 import { MinimalistTemplate } from "@/app/invitation/templates/MinimalistTemplate";
@@ -25,7 +26,7 @@ export const TEMPLATES: WeddingTemplate[] = [
     id: "classic",
     name: "Classic",
     description: "Elegant serif typography with rose accents and traditional layout",
-    thumbnail: "/templates/classic-thumb.jpg",
+    thumbnail: "/templates/classic-thumb.svg",
     category: "traditional",
     component: ClassicTemplate,
   },
@@ -33,7 +34,7 @@ export const TEMPLATES: WeddingTemplate[] = [
     id: "modern",
     name: "Modern",
     description: "Bold dark mode with gradient accents and asymmetric grid",
-    thumbnail: "/templates/modern-thumb.jpg",
+    thumbnail: "/templates/modern-thumb.svg",
     category: "modern",
     component: ModernTemplate,
   },
@@ -41,7 +42,7 @@ export const TEMPLATES: WeddingTemplate[] = [
     id: "minimalist",
     name: "Minimalist",
     description: "Clean black and white with lots of whitespace",
-    thumbnail: "/templates/minimalist-thumb.jpg",
+    thumbnail: "/templates/minimalist-thumb.svg",
     category: "minimalist",
     component: MinimalistTemplate,
   },
@@ -49,7 +50,7 @@ export const TEMPLATES: WeddingTemplate[] = [
     id: "floral",
     name: "Floral",
     description: "Organic shapes with soft pastel colors and decorative elements",
-    thumbnail: "/templates/floral-thumb.jpg",
+    thumbnail: "/templates/floral-thumb.svg",
     category: "decorative",
     component: FloralTemplate,
   },
