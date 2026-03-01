@@ -36,31 +36,32 @@
 
 .dark {
   /* Surfaces */
-  --background: #141416;          /* Soft Black - main bg */
-  --card: #1a1a1c;                /* Soft Black lightened - cards, panels */
-    --muted: #2a2a2e;               /* Soft Black lightened - accents, hover */
-  --secondary: #2a2a2e;           /* Same as muted - secondary buttons */
+  --background: #0E0E10;          /* Charcoal - main bg */
+  --card: #141416;                /* Soft Black - unified panel backgrounds */
+    --muted: #1a1a1c;               /* Soft Black lightened - accents, hover */
+  --secondary: #1a1a1c;           /* Same as muted - secondary buttons */
 
   /* Text */
-  --foreground: #f5f4f1;          /* Ivory - headings, primary content */
-  --card-foreground: #f5f4f1;     /* Ivory - text on cards */
-  --muted-foreground: #cfcfd2;    /* Muted Silver - body, muted text */
-  --secondary-foreground: #f5f4f1; /* Ivory - text on secondary */
+  --foreground: #F5F4F1;          /* Ivory - headings and important labels */
+  --card-foreground: #F5F4F1;     /* Ivory - text on cards */
+  --muted-foreground: #CFCFD2;    /* Muted Silver - body text and secondary info */
+  --tertiary-foreground: #6B6B6E; /* Tertiary - timestamps, metadata, muted states */
+  --secondary-foreground: #F5F4F1; /* Ivory - text on secondary */
 
   /* Interactive */
-  --primary: #ffffff;            /* Deep Gold - primary buttons, links */
-  --primary-foreground: #0e0e10; /* Charcoal - text on primary */
-  --accent: #2a2a2e;              /* Soft Black lightened - accent surfaces */
-  --accent-foreground: #f5f4f1;   /* Ivory - text on accent */
-  --ring: #ffffff;                /* Deep Gold - focus ring */
+  --primary: #BFA14A;            /* Deep Gold - active states, success, primary actions */
+  --primary-foreground: #0E0E10; /* Charcoal - text on primary */
+  --accent: #1a1a1c;              /* Soft Black lightened - accent surfaces */
+  --accent-foreground: #F5F4F1;   /* Ivory - text on accent */
+  --ring: #BFA14A;                /* Deep Gold - focus ring */
 
   /* Destructive */
-  --destructive: #b91c1c;
-  --destructive-foreground: #f5f4f1;
+  --destructive: #B91C1C;         /* Red accent - destructive actions and errors */
+  --destructive-foreground: #F5F4F1;
 
   /* Borders */
-  --border: #3a3a3e;              /* Dark gray - default borders */
-  --input: #3a3a3e;               /* Dark gray - input borders */
+  --border: rgba(255, 255, 255, 0.06);  /* 6% white opacity - consistent across all elements */
+  --input: rgba(255, 255, 255, 0.06);   /* 6% white opacity - input borders */
 }
 
 @theme inline {
@@ -68,6 +69,7 @@
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
+  --color-tertiary-foreground: var(--tertiary-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-accent: var(--accent);
@@ -129,5 +131,73 @@ body {
     animation: none;
     opacity: 1;
     transform: none;
+  }
+}
+
+/* Accordion animations */
+@keyframes collapsible-down {
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    height: var(--radix-collapsible-content-height);
+    opacity: 1;
+  }
+}
+
+@keyframes collapsible-up {
+  from {
+    height: var(--radix-collapsible-content-height);
+    opacity: 1;
+  }
+  to {
+    height: 0;
+    opacity: 0;
+  }
+}
+
+.animate-collapsible-down {
+  animation: collapsible-down 0.2s ease-out;
+}
+
+.animate-collapsible-up {
+  animation: collapsible-up 0.2s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-collapsible-down,
+  .animate-collapsible-up {
+    animation: none;
+  }
+}
+
+/* Skeleton shimmer animation */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-pulse {
+    animation: none;
+    opacity: 0.5;
   }
 }

@@ -15,7 +15,7 @@ export function WeddingTabs({ weddingId }: { weddingId: string }) {
 
   return (
     <nav
-      className="flex gap-1 border-b border-white/6"
+      className="flex gap-1 border-b border-white/[0.06]"
       aria-label="Project sections"
     >
       {TABS.map(({ href, label }) => {
@@ -31,8 +31,8 @@ export function WeddingTabs({ weddingId }: { weddingId: string }) {
             href={hrefResolved}
             className={
               isActive
-                ? "border-b-2 border-[#BFA14A] px-3 py-2.5 text-xs font-medium text-[#BFA14A] -mb-px transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#BFA14A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0E0E10] rounded-t"
-                : "px-3 py-2.5 text-xs font-medium text-neutral-400 hover:text-neutral-200 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#BFA14A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0E0E10] rounded-t"
+                ? "border-b-2 border-[#BFA14A] px-3 py-2.5 text-[11px] font-medium text-[#BFA14A] -mb-px transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#BFA14A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0E0E10] rounded-t"
+                : "px-3 py-2.5 text-[11px] font-medium text-neutral-500 hover:text-neutral-200 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#BFA14A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0E0E10] rounded-t"
             }
           >
             {label}

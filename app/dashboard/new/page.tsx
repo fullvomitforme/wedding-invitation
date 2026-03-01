@@ -42,19 +42,19 @@ export default function NewWeddingPage() {
 
   if (status === "loading") {
     return (
-      <div className="rounded-md border border-white/6 bg-[#141416] px-6 py-6">
-        <h2 className="text-lg font-semibold text-neutral-50">New wedding</h2>
-        <p className="text-sm text-neutral-400 mt-1">Creating your wedding…</p>
+      <div className="border-b border-border bg-card px-3 py-3">
+        <h2 className="text-[16px] font-semibold text-foreground">New wedding</h2>
+        <p className="text-[11px] text-tertiary-foreground mt-1">Creating your wedding…</p>
       </div>
     );
   }
 
   if (status === "error") {
     return (
-      <div className="rounded-md border border-white/6 bg-[#141416] px-6 py-6 space-y-4">
-        <h2 className="text-lg font-semibold text-neutral-50">New wedding</h2>
-        <p className="text-sm text-red-300" role="alert">{error}</p>
-        <Button variant="outline" asChild className="border-white/10 text-neutral-200 hover:bg-white/5 focus-visible:ring-[#BFA14A]">
+      <div className="border-b border-border bg-card px-3 py-3 space-y-4">
+        <h2 className="text-[16px] font-semibold text-foreground">New wedding</h2>
+        <p className="text-[11px] text-destructive" role="alert">{error}</p>
+        <Button variant="outline" asChild className="border border-border text-[11px] text-muted-foreground transition-all duration-150 hover:bg-white/5 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background">
           <Link href="/dashboard">← Back to dashboard</Link>
         </Button>
       </div>
@@ -62,9 +62,9 @@ export default function NewWeddingPage() {
   }
 
   return (
-    <div className="rounded-md border border-white/6 bg-[#141416] px-6 py-6">
-      <h2 className="text-lg font-semibold text-neutral-50">New wedding</h2>
-      <p className="text-sm text-neutral-400 mt-1">Redirecting…</p>
+    <div className="border-b border-border bg-card px-3 py-3">
+      <h2 className="text-[16px] font-semibold text-foreground">New wedding</h2>
+      <p className="text-[11px] text-tertiary-foreground mt-1">Redirecting…</p>
     </div>
   );
 }

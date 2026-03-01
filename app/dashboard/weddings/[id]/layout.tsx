@@ -3,7 +3,7 @@ import Link from "next/link";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { createServerClient } from "@/lib/supabase";
-import { WeddingTabs } from "./WeddingTabs";
+import { StatusBadge } from "@/components/ui/status-badge";
 
 const BASE_DOMAIN =
   process.env.NEXT_PUBLIC_APP_URL?.replace(/^https?:\/\//, "") ?? "localhost:3000";
@@ -53,32 +53,23 @@ export default async function WeddingEditLayout({
   return (
     <div className="space-y-0">
       {/* Project header: title + status + actions */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <h1 className="truncate text-xl font-semibold tracking-tight text-neutral-50 sm:text-2xl" title={title}>
+      <div className="flex flex-col gap-4 border-b border-border px-3 py-3 sm:flex-row sm:items-center sm:justify-between">
+        <h2 className="truncate text-[16px] font-semibold tracking-tight text-foreground" title={title}>
           {title}
-        </h1>
+        </h2>
         <div className="flex flex-wrap items-center gap-2">
-          <span
-            className={
-              wedding.status === "released"
-                ? "inline-flex items-center gap-1.5 rounded-full border border-[#BFA14A] px-2 py-0.5 text-[11px] font-medium text-[#BFA14A]"
-                : "inline-flex items-center rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[11px] font-medium text-neutral-400"
-            }
-          >
-            {wedding.status === "released" && <span className="size-1.5 rounded-full bg-[#BFA14A]" aria-hidden />}
-            {wedding.status === "released" ? "Released" : "Draft"}
-          </span>
+          <StatusBadge status={wedding.status === "released" ? "released" : "draft"} />
           <Link
             href={`/preview/${id}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-8 items-center rounded-md border border-white/10 bg-transparent px-3 text-xs text-neutral-200 hover:bg-white/5 hover:text-neutral-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#BFA14A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0E0E10]"
+            className="inline-flex h-8 items-center rounded border border-border bg-transparent px-3 text-[11px] text-muted-foreground transition-all duration-150 hover:bg-white/5 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             Preview
           </Link>
           <Link
             href={`/dashboard/weddings/${id}/settings`}
-            className="inline-flex h-8 items-center rounded-md border border-white/10 bg-transparent px-3 text-xs text-neutral-200 hover:bg-white/5 hover:text-neutral-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#BFA14A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0E0E10]"
+            className="inline-flex h-8 items-center rounded border border-border bg-transparent px-3 text-[11px] text-muted-foreground transition-all duration-150 hover:bg-white/5 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             Settings
           </Link>
@@ -87,7 +78,7 @@ export default async function WeddingEditLayout({
               href={siteUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-8 items-center rounded-md bg-neutral-100 px-3 text-xs font-medium text-[#0E0E10] hover:bg-neutral-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#BFA14A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0E0E10]"
+              className="inline-flex h-8 items-center rounded border border-border bg-white/5 px-3 text-[11px] font-medium text-foreground transition-all duration-150 hover:bg-white/10 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               Visit
             </a>
@@ -95,12 +86,9 @@ export default async function WeddingEditLayout({
         </div>
       </div>
 
-      {/* Horizontal tabs */}
-      <WeddingTabs weddingId={id} />
-
-      {/* Main content panel */}
-      <div className="rounded-md border border-white/6 bg-[#141416]">
-        <div className="p-4 sm:p-6">{children}</div>
+      {/* Main content panel - accordion will be rendered here */}
+      <div className="border-b border-border bg-card">
+        {children}
       </div>
     </div>
   );

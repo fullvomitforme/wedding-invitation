@@ -45,7 +45,7 @@ function useTheme() {
 }
 
 const itemClass =
-  "flex min-h-[36px] cursor-pointer select-none items-center gap-2 rounded px-2 py-1.5 text-xs text-foreground outline-none transition-colors hover:bg-muted/20 hover:text-foreground focus:bg-muted/20 focus:text-foreground data-[highlighted]:bg-muted/20 data-[highlighted]:text-foreground data-[highlighted]:outline-none";
+  "flex min-h-[36px] cursor-pointer select-none items-center gap-2 rounded px-2 py-1.5 text-xs text-foreground outline-none transition-colors duration-150 hover:bg-white/5 hover:text-foreground focus:bg-white/5 focus:text-foreground data-[highlighted]:bg-white/5 data-[highlighted]:text-foreground data-[highlighted]:outline-none";
 
 export function UserProfileDropdown() {
   const router = useRouter();
@@ -70,7 +70,7 @@ export function UserProfileDropdown() {
       <DropdownMenu.Trigger asChild>
         <button
           type="button"
-          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border/10 bg-muted/20 text-[11px] font-medium text-muted-foreground transition-colors hover:border-border/20 hover:bg-muted/30 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border bg-card text-[11px] font-medium text-muted-foreground transition-colors duration-150 hover:border-border/20 hover:bg-white/5 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           aria-label="Open account menu"
         >
           {userInitial}
@@ -80,18 +80,18 @@ export function UserProfileDropdown() {
         <DropdownMenu.Content
           sideOffset={8}
           align="end"
-          className="z-50 min-w-[220px] rounded-md border border-border/10 bg-card p-1 shadow-lg"
+          className="z-50 min-w-[220px] rounded border border-border bg-card p-1 shadow-lg"
         >
           {/* User */}
-          <div className="border-b border-border/10 px-2 py-2">
-            <p className="truncate text-sm font-semibold text-foreground">
+          <div className="border-b border-border px-2 py-2">
+            <p className="truncate text-[13px] font-semibold text-foreground">
               {userDisplayName}
             </p>
-            <p className="truncate text-xs text-muted-foreground">{userEmail}</p>
+            <p className="truncate text-[11px] text-tertiary-foreground">{userEmail}</p>
           </div>
 
           <DropdownMenu.Item asChild className={itemClass}>
-            <Link href="/dashboard" className={cn(isDashboard && "bg-muted/20 text-primary")}>
+            <Link href="/dashboard" className={cn(isDashboard && "bg-white/5 text-primary")}>
               <LayoutDashboard className="size-3.5 shrink-0" aria-hidden />
               Dashboard
             </Link>
@@ -109,25 +109,25 @@ export function UserProfileDropdown() {
             </Link>
           </DropdownMenu.Item>
 
-          <DropdownMenu.Separator className="my-1 h-px bg-border/10" />
+          <DropdownMenu.Separator className="my-1 h-px bg-border" />
 
           <DropdownMenu.Item className={itemClass} disabled>
             <Command className="size-3.5 shrink-0" aria-hidden />
             <span className="flex-1">Command Menu</span>
-            <kbd className="rounded border border-border/10 bg-muted/20 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">
+            <kbd className="rounded border border-border bg-white/5 px-1.5 py-0.5 font-mono text-[10px] text-tertiary-foreground">
               ⌘K
             </kbd>
           </DropdownMenu.Item>
           <div className="flex items-center justify-between gap-2 px-2 py-1.5">
-            <span className="text-xs text-muted-foreground">Theme</span>
-            <div className="flex rounded-md border border-border/10 bg-muted/20 p-0.5" role="group" aria-label="Theme">
+            <span className="text-[11px] text-neutral-500">Theme</span>
+            <div className="flex rounded border border-white/[0.06] bg-white/5 p-0.5" role="group" aria-label="Theme">
               <button
                 type="button"
                 onClick={() => setTheme("system")}
                 title="System"
                 className={cn(
-                  "rounded p-1 text-muted-foreground transition-colors hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-primary",
-                  theme === "system" && "border border-border/10 bg-muted/30 text-foreground"
+                  "rounded p-1 text-neutral-500 transition-colors hover:text-neutral-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BFA14A]",
+                  theme === "system" && "border border-white/[0.06] bg-white/10 text-neutral-200"
                 )}
                 aria-pressed={theme === "system"}
               >
@@ -138,8 +138,8 @@ export function UserProfileDropdown() {
                 onClick={() => setTheme("light")}
                 title="Light"
                 className={cn(
-                  "rounded p-1 text-muted-foreground transition-colors hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-primary",
-                  theme === "light" && "border border-border/10 bg-muted/30 text-foreground"
+                  "rounded p-1 text-neutral-500 transition-colors hover:text-neutral-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BFA14A]",
+                  theme === "light" && "border border-white/[0.06] bg-white/10 text-neutral-200"
                 )}
                 aria-pressed={theme === "light"}
               >
@@ -150,8 +150,8 @@ export function UserProfileDropdown() {
                 onClick={() => setTheme("dark")}
                 title="Dark"
                 className={cn(
-                  "rounded p-1 text-muted-foreground transition-colors hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-primary",
-                  theme === "dark" && "border border-border/10 bg-muted/30 text-foreground"
+                  "rounded p-1 text-neutral-500 transition-colors hover:text-neutral-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BFA14A]",
+                  theme === "dark" && "border border-white/[0.06] bg-white/10 text-neutral-200"
                 )}
                 aria-pressed={theme === "dark"}
               >
@@ -160,7 +160,7 @@ export function UserProfileDropdown() {
             </div>
           </div>
 
-          <DropdownMenu.Separator className="my-1 h-px bg-border/10" />
+          <DropdownMenu.Separator className="my-1 h-px bg-border" />
 
           <DropdownMenu.Item asChild className={itemClass}>
             <Link href="/">
@@ -179,12 +179,12 @@ export function UserProfileDropdown() {
             Log out
           </DropdownMenu.Item>
 
-          <DropdownMenu.Separator className="my-1 h-px bg-border/10" />
+          <DropdownMenu.Separator className="my-1 h-px bg-border" />
 
           <div className="p-1">
             <Link
               href="/request-access"
-              className="flex min-h-[36px] w-full items-center justify-center rounded-md bg-muted/20 text-xs font-medium text-foreground transition-colors hover:bg-muted/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+              className="flex min-h-[36px] w-full items-center justify-center rounded border border-border bg-transparent text-[11px] font-medium text-foreground transition-colors duration-150 hover:bg-white/5 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
             >
               Upgrade to Pro
             </Link>

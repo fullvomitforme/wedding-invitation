@@ -13,9 +13,11 @@ type Props = {
   weddingId: string;
   initialSlug: string | null;
   initialStatus: string;
+  onUnsaved?: () => void;
+  onSaved?: () => void;
 };
 
-export function SettingsForm({ weddingId, initialSlug, initialStatus }: Props) {
+export function SettingsForm({ weddingId, initialSlug, initialStatus, onUnsaved, onSaved }: Props) {
   const router = useRouter();
   const [slug, setSlug] = useState(initialSlug ?? "");
   const [slugTouched, setSlugTouched] = useState(false);
@@ -81,6 +83,7 @@ export function SettingsForm({ weddingId, initialSlug, initialStatus }: Props) {
       }
       setReleased(true);
       toast.success("Project released.");
+      onSaved?.();
     } catch {
       setError("Failed to release");
       toast.error("Failed to release");
@@ -153,6 +156,7 @@ export function SettingsForm({ weddingId, initialSlug, initialStatus }: Props) {
           value={slug}
           onChange={(e) => {
             setSlug(e.target.value);
+            onUnsaved?.();
             setSlugAvailable(null);
           }}
           onBlur={() => setSlugTouched(true)}
@@ -160,25 +164,25 @@ export function SettingsForm({ weddingId, initialSlug, initialStatus }: Props) {
           autoComplete="off"
           spellCheck={false}
           disabled={released}
-          className="min-h-[44px] w-full max-w-md rounded-md border border-white/10 bg-white/5 px-3 py-2 text-base text-neutral-100 placeholder:text-neutral-500 outline-none focus-visible:border-[#BFA14A] focus-visible:ring-2 focus-visible:ring-[#BFA14A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#141416] disabled:opacity-60 transition-colors duration-200"
+          className="min-h-[32px] w-full max-w-md rounded border border-input bg-white/5 px-2.5 py-1.5 text-[12px] text-foreground placeholder:text-tertiary-foreground outline-none transition-all duration-150 focus:border-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card disabled:opacity-60 aria-invalid:border-destructive/50 aria-invalid:ring-destructive/20"
           aria-invalid={slugError ? true : undefined}
           aria-describedby={slugError ? "slug-error" : "slug-preview"}
         />
         {slugError && (
-          <p id="slug-error" className="text-sm text-red-300" role="alert">
+          <p id="slug-error" className="text-[11px] text-destructive mt-1" role="alert">
             {slugError}
           </p>
         )}
         {slugValid && slugTrimmed && !slugError && (
-          <p id="slug-preview" className="text-sm text-neutral-400">
+          <p id="slug-preview" className="text-[11px] text-muted-foreground">
             Your site will be at{" "}
-            <strong className="font-medium text-neutral-200">
+            <strong className="font-medium text-foreground">
               https://{slugTrimmed}.{BASE_DOMAIN === "localhost" ? "localhost:3000" : BASE_DOMAIN}
             </strong>
           </p>
         )}
         {slugChecking && (
-          <p className="text-sm text-neutral-400" aria-live="polite">
+          <p className="text-[11px] text-muted-foreground" aria-live="polite">
             Checking availability…
           </p>
         )}
@@ -189,7 +193,7 @@ export function SettingsForm({ weddingId, initialSlug, initialStatus }: Props) {
           type="button"
           onClick={handleRelease}
           disabled={!canRelease || releasing}
-          className="min-h-[44px] px-5 py-2 rounded-md bg-neutral-100 text-[#0E0E10] font-medium hover:bg-neutral-200 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BFA14A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#141416] inline-flex items-center gap-2 transition-colors duration-200"
+          className="min-h-[44px] px-5 py-2 rounded border border-border bg-primary text-primary-foreground font-medium transition-all duration-150 hover:bg-primary/90 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card inline-flex items-center gap-2"
         >
           {releasing ? (
             <>
@@ -207,20 +211,20 @@ export function SettingsForm({ weddingId, initialSlug, initialStatus }: Props) {
             href={`https://${slugTrimmed}.${BASE_DOMAIN === "localhost" ? "localhost:3000" : BASE_DOMAIN}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="min-h-[44px] px-4 py-2 rounded-md border border-white/10 font-medium text-neutral-200 hover:bg-white/5 outline-none focus-visible:ring-2 focus-visible:ring-[#BFA14A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#141416] inline-flex items-center transition-colors duration-200"
+            className="min-h-[44px] px-4 py-2 rounded border border-border bg-white/5 font-medium text-foreground transition-all duration-150 hover:bg-white/10 hover:text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card inline-flex items-center"
           >
             View site →
           </a>
         )}
       </div>
 
-      <div className="space-y-3 rounded-md border border-red-500/40 bg-red-500/10 px-4 py-3">
-        <h3 className="text-sm font-semibold text-red-300">Danger zone</h3>
-        <p className="text-xs text-red-300/90">
+      <div className="space-y-3 rounded border border-destructive/40 bg-destructive/10 px-4 py-3">
+        <h3 className="text-[13px] font-semibold text-destructive">Danger zone</h3>
+        <p className="text-[11px] text-destructive/90">
           Delete this wedding site and its collaborators, RSVP, and wishes data. This action cannot be undone.
         </p>
         {deleteError && (
-          <p className="text-xs text-red-300" role="alert">
+          <p className="text-[11px] text-destructive" role="alert">
             {deleteError}
           </p>
         )}
@@ -228,7 +232,7 @@ export function SettingsForm({ weddingId, initialSlug, initialStatus }: Props) {
           type="button"
           onClick={handleDelete}
           disabled={deleting}
-          className="inline-flex min-h-[36px] items-center justify-center rounded-md border border-red-500/50 bg-red-500/20 px-3 py-1.5 text-xs font-medium text-red-300 hover:bg-red-500/25 disabled:opacity-50 outline-none focus-visible:ring-2 focus-visible:ring-[#BFA14A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#141416] transition-colors duration-200"
+          className="inline-flex min-h-[36px] items-center justify-center rounded border border-destructive/50 bg-destructive/20 px-3 py-1.5 text-[11px] font-medium text-destructive transition-all duration-150 hover:bg-destructive/25 disabled:opacity-50 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
         >
           {deleting ? "Deleting…" : "Delete wedding"}
         </button>

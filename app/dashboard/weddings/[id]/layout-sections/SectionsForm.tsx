@@ -19,9 +19,11 @@ const SECTION_LABELS: Record<string, string> = {
 type Props = {
   weddingId: string;
   initialSections: SectionConfig[];
+  onUnsaved?: () => void;
+  onSaved?: () => void;
 };
 
-export function SectionsForm({ weddingId, initialSections }: Props) {
+export function SectionsForm({ weddingId, initialSections, onUnsaved, onSaved }: Props) {
   const [sections, setSections] = useState<SectionConfig[]>(
     [...initialSections].sort((a, b) => a.order - b.order)
   );
@@ -51,6 +53,7 @@ export function SectionsForm({ weddingId, initialSections }: Props) {
       setSections([...(data.sections ?? next)].sort((a: SectionConfig, b: SectionConfig) => a.order - b.order));
       setSaved(true);
       toast.success("Layout saved.");
+      onSaved?.();
       setTimeout(() => setSaved(false), 2000);
     },
     [weddingId]
@@ -61,6 +64,7 @@ export function SectionsForm({ weddingId, initialSections }: Props) {
       i === index ? { ...s, enabled: !s.enabled } : s
     );
     setSections(next);
+    onUnsaved?.();
     save(next);
   };
 
@@ -72,31 +76,32 @@ export function SectionsForm({ weddingId, initialSections }: Props) {
     next.sort((a, b) => a.order - b.order);
     const reordered = next.map((s, i) => ({ ...s, order: i }));
     setSections(reordered);
+    onUnsaved?.();
     save(reordered);
   };
 
   const btnClass =
-    "min-h-[40px] min-w-[40px] inline-flex items-center justify-center rounded-md border border-white/10 bg-white/5 text-neutral-200 hover:bg-white/10 disabled:opacity-40 disabled:pointer-events-none outline-none focus-visible:ring-2 focus-visible:ring-[#BFA14A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#141416] transition-colors duration-200";
+    "min-h-[40px] min-w-[40px] inline-flex items-center justify-center rounded border border-border bg-white/5 text-foreground transition-all duration-150 hover:border-border/20 hover:bg-white/10 disabled:opacity-40 disabled:pointer-events-none outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card";
 
   return (
     <div className="space-y-6">
-      <h2 className="text-lg font-semibold text-neutral-50">Layout</h2>
-      <p className="text-sm text-neutral-400">
+      <h2 className="text-lg font-semibold text-foreground">Layout</h2>
+      <p className="text-[11px] text-tertiary-foreground">
         Turn sections on or off and change their order on the invitation.
       </p>
 
       {error && (
-        <div className="rounded-md border border-red-500/40 bg-red-500/10 px-3 py-2 text-sm text-red-300" role="alert">
+        <div className="rounded border border-destructive/40 bg-destructive/10 px-3 py-2 text-[11px] text-destructive" role="alert">
           {error}
         </div>
       )}
       {saved && (
-        <p className="text-sm text-neutral-400" role="status" aria-live="polite">
+        <p className="text-[11px] text-tertiary-foreground" role="status" aria-live="polite">
           Saved.
         </p>
       )}
 
-      <ul className="space-y-0 rounded-md border border-white/6 divide-y divide-white/6 bg-[#0E0E10]/50">
+      <ul className="space-y-0 rounded border border-border divide-y divide-border bg-background/50">
         {sections.map((section, index) => (
           <li
             key={section.id}
@@ -127,10 +132,10 @@ export function SectionsForm({ weddingId, initialSections }: Props) {
                 type="checkbox"
                 checked={section.enabled}
                 onChange={() => toggle(index)}
-                className="size-5 rounded border-white/10 bg-white/5 text-[#BFA14A] outline-none focus-visible:ring-2 focus-visible:ring-[#BFA14A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#141416]"
+                className="size-5 rounded border-border bg-white/5 text-primary outline-none transition-all duration-150 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
                 aria-describedby={`section-desc-${section.id}`}
               />
-              <span id={`section-desc-${section.id}`} className="font-medium text-neutral-200">
+              <span id={`section-desc-${section.id}`} className="font-medium text-foreground">
                 {SECTION_LABELS[section.id] ?? section.id}
               </span>
             </label>
@@ -139,7 +144,7 @@ export function SectionsForm({ weddingId, initialSections }: Props) {
       </ul>
 
       {saving && (
-        <p className="text-sm text-neutral-400 flex items-center gap-2" aria-live="polite">
+        <p className="text-[11px] text-tertiary-foreground flex items-center gap-2" aria-live="polite">
           <span className="inline-block size-4 animate-spin rounded-full border-2 border-current border-t-transparent" aria-hidden />
           Saving…
         </p>

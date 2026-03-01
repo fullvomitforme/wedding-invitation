@@ -18,9 +18,12 @@ import { ImageUpload } from "@/components/ui/image-upload";
 type Props = {
   weddingId: string;
   initialContent: WeddingContent;
+  section?: string;
+  onUnsaved?: () => void;
+  onSaved?: () => void;
 };
 
-export function ContentForm({ weddingId, initialContent }: Props) {
+export function ContentForm({ weddingId, initialContent, onUnsaved, onSaved }: Props) {
   const [content, setContent] = useState<WeddingContent>(initialContent);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -50,6 +53,7 @@ export function ContentForm({ weddingId, initialContent }: Props) {
       setContent(data.content ?? content);
       setSaved(true);
       toast.success("Content saved.");
+      onSaved?.();
       setTimeout(() => setSaved(false), 2000);
     },
     [weddingId, content]
@@ -88,6 +92,7 @@ export function ContentForm({ weddingId, initialContent }: Props) {
     if (!next.couple[side]) next.couple[side] = { name: "", username: "", parentInfo: "", location: "" };
     (next.couple[side] as unknown as Record<string, string>)[field] = value;
     setContent(next);
+    onUnsaved?.();
   };
 
   const updateEvent = (index: number, field: string, value: string | undefined) => {
@@ -95,6 +100,7 @@ export function ContentForm({ weddingId, initialContent }: Props) {
     while (events.length <= index) events.push({ title: "", date: "", time: "", location: "", address: "" });
     (events[index] as unknown as Record<string, string | undefined>)[field] = value;
     setContent({ ...content, events });
+    onUnsaved?.();
   };
 
   const addEvent = () => {
@@ -114,8 +120,8 @@ export function ContentForm({ weddingId, initialContent }: Props) {
   const events = content.events ?? [];
 
   const inputClass =
-    "min-h-[44px] w-full rounded-md border border-white/10 bg-white/5 px-3 py-2 text-base text-neutral-100 placeholder:text-neutral-500 outline-none focus-visible:border-[#BFA14A] focus-visible:ring-2 focus-visible:ring-[#BFA14A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#141416] transition-colors duration-200";
-  const labelClass = "block text-sm font-medium text-neutral-300 mb-1";
+    "min-h-[32px] w-full rounded border border-input bg-white/5 px-2.5 py-1.5 text-[12px] text-foreground placeholder:text-tertiary-foreground outline-none transition-all duration-150 focus:border-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card aria-invalid:border-destructive/50 aria-invalid:ring-destructive/20";
+  const labelClass = "block text-[11px] font-medium text-tertiary-foreground mb-1";
 
   function EventDatePicker({
     value,
@@ -166,19 +172,33 @@ export function ContentForm({ weddingId, initialContent }: Props) {
       <h2 className="text-lg font-semibold text-neutral-50">Content</h2>
 
       {error && (
-        <div className="rounded-md border border-red-500/40 bg-red-500/10 px-3 py-2 text-sm text-red-300" role="alert">
+        <div className="rounded border border-destructive/40 bg-destructive/10 px-3 py-2 text-[11px] text-destructive" role="alert">
           {error}
         </div>
       )}
       {fieldErrors.couple && (
-        <p id="content-couple-error" className="text-sm text-red-300" role="alert">
+        <p id="content-couple-error" className="text-[11px] text-destructive mt-1" role="alert">
           {fieldErrors.couple}
         </p>
       )}
       {saved && (
-        <p className="text-sm text-neutral-400" role="status" aria-live="polite">
-          Saved.
-        </p>
+        <div className="flex items-center gap-1.5 text-[11px] text-tertiary-foreground" role="status" aria-live="polite">
+          <svg
+            className="size-3 shrink-0"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            aria-hidden
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M5 13l4 4L19 7"
+            />
+          </svg>
+          Saved
+        </div>
       )}
 
       <fieldset className="space-y-4" aria-describedby={fieldErrors.couple ? "content-couple-error" : undefined}>
@@ -208,6 +228,8 @@ export function ContentForm({ weddingId, initialContent }: Props) {
                     className={inputClass}
                     autoComplete={field === "name" ? "name" : "off"}
                     spellCheck={field !== "username"}
+                    aria-invalid={fieldErrors.couple ? "true" : "false"}
+                    aria-describedby={fieldErrors.couple ? "content-couple-error" : undefined}
                   />
                 )}
               </div>
@@ -237,6 +259,8 @@ export function ContentForm({ weddingId, initialContent }: Props) {
                     className={inputClass}
                     autoComplete={field === "name" ? "name" : "off"}
                     spellCheck={field !== "username"}
+                    aria-invalid={fieldErrors.couple ? "true" : "false"}
+                    aria-describedby={fieldErrors.couple ? "content-couple-error" : undefined}
                   />
                 )}
               </div>
@@ -296,20 +320,22 @@ export function ContentForm({ weddingId, initialContent }: Props) {
       </fieldset>
 
       <div className="flex gap-3">
-        <button
-          type="submit"
-          disabled={saving}
-          className="min-h-[44px] px-5 py-2 rounded-md bg-neutral-100 text-[#0E0E10] font-medium hover:bg-neutral-200 disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BFA14A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#141416] transition-colors duration-200 inline-flex items-center gap-2"
-        >
-          {saving ? (
-            <>
-              <span className="inline-block size-4 animate-spin rounded-full border-2 border-current border-t-transparent" aria-hidden />
-              Saving…
-            </>
-          ) : (
-            "Save content"
-          )}
-        </button>
+        <div className="flex justify-end">
+          <button
+            type="submit"
+            disabled={saving}
+            className="h-8 rounded border border-border bg-primary px-3 text-[11px] font-medium text-primary-foreground transition-all duration-150 hover:border-border/20 hover:bg-primary/90 disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card inline-flex items-center gap-2"
+          >
+            {saving ? (
+              <>
+                <span className="inline-block size-3 animate-spin rounded-full border-2 border-current border-t-transparent" aria-hidden />
+                Saving…
+              </>
+            ) : (
+              "Save Changes"
+            )}
+          </button>
+        </div>
       </div>
     </form>
   );
