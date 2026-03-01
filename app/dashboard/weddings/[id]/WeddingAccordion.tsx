@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { AccordionItem } from "@/components/ui/accordion";
 import { ContentForm } from "./content/ContentForm";
+import { TemplateForm } from "./template/TemplateForm";
 import { SectionsForm } from "./layout-sections/SectionsForm";
 import { SettingsForm } from "./settings/SettingsForm";
 import type { WeddingContent } from "@/lib/wedding-defaults";
@@ -33,6 +34,7 @@ export function WeddingAccordion({
     music: null,
     layout: null,
     settings: null,
+    template: null,
   });
 
   const handleSectionChange = (sectionId: string, open: boolean) => {
@@ -64,6 +66,17 @@ export function WeddingAccordion({
     setSaveStates((prev) => ({ ...prev, layout: "saved" }));
     setTimeout(() => {
       setSaveStates((prev) => ({ ...prev, layout: null }));
+    }, 2000);
+  };
+
+  const handleTemplateUnsaved = () => {
+    setSaveStates((prev) => ({ ...prev, template: "unsaved" }));
+  };
+
+  const handleTemplateSaved = () => {
+    setSaveStates((prev) => ({ ...prev, template: "saved" }));
+    setTimeout(() => {
+      setSaveStates((prev) => ({ ...prev, template: null }));
     }, 2000);
   };
 
@@ -141,6 +154,21 @@ export function WeddingAccordion({
           section="music"
           onUnsaved={() => handleContentUnsaved("music")}
           onSaved={() => handleContentSaved("music")}
+        />
+      </AccordionItem>
+
+      <AccordionItem
+        id="template"
+        title="Template"
+        isOpen={openSection === "template"}
+        onOpenChange={(open) => handleSectionChange("template", open)}
+        saveStatus={saveStates.template}
+      >
+        <TemplateForm
+          weddingId={weddingId}
+          initialTemplateId={initialTemplateId}
+          onUnsaved={handleTemplateUnsaved}
+          onSaved={handleTemplateSaved}
         />
       </AccordionItem>
 
