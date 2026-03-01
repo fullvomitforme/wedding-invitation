@@ -70,7 +70,7 @@ export function UserProfileDropdown() {
       <DropdownMenu.Trigger asChild>
         <button
           type="button"
-          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border bg-card text-[11px] font-medium text-muted-foreground transition-colors duration-150 hover:border-border/20 hover:bg-white/5 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          className="flex justify-center items-center bg-card hover:bg-white/5 border border-border hover:border-border/20 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background w-8 h-8 font-medium text-[11px] text-muted-foreground hover:text-foreground transition-colors duration-150 shrink-0"
           aria-label="Open account menu"
         >
           {userInitial}
@@ -80,14 +80,14 @@ export function UserProfileDropdown() {
         <DropdownMenu.Content
           sideOffset={8}
           align="end"
-          className="z-50 min-w-[220px] rounded border border-border bg-card p-1 shadow-lg"
+          className="z-50 bg-card shadow-lg p-1 border border-border rounded min-w-[220px]"
         >
           {/* User */}
-          <div className="border-b border-border px-2 py-2">
-            <p className="truncate text-[13px] font-semibold text-foreground">
+          <div className="px-2 py-2 border-border border-b">
+            <p className="font-semibold text-[13px] text-foreground truncate">
               {userDisplayName}
             </p>
-            <p className="truncate text-[11px] text-tertiary-foreground">{userEmail}</p>
+            <p className="text-[11px] text-tertiary-foreground truncate">{userEmail}</p>
           </div>
 
           <DropdownMenu.Item asChild className={itemClass}>
@@ -109,24 +109,24 @@ export function UserProfileDropdown() {
             </Link>
           </DropdownMenu.Item>
 
-          <DropdownMenu.Separator className="my-1 h-px bg-border" />
+          <DropdownMenu.Separator className="my-1 bg-border h-px" />
 
           <DropdownMenu.Item className={itemClass} disabled>
             <Command className="size-3.5 shrink-0" aria-hidden />
             <span className="flex-1">Command Menu</span>
-            <kbd className="rounded border border-border bg-white/5 px-1.5 py-0.5 font-mono text-[10px] text-tertiary-foreground">
+            <kbd className="bg-white/5 px-1.5 py-0.5 border border-border rounded font-mono text-[10px] text-tertiary-foreground">
               ⌘K
             </kbd>
           </DropdownMenu.Item>
-          <div className="flex items-center justify-between gap-2 px-2 py-1.5">
+          <div className="flex justify-between items-center gap-2 px-2 py-1.5">
             <span className="text-[11px] text-neutral-500">Theme</span>
-            <div className="flex rounded border border-white/[0.06] bg-white/5 p-0.5" role="group" aria-label="Theme">
+            <div className="flex bg-white/5 p-0.5 border border-white/[0.06] rounded" role="group" aria-label="Theme">
               <button
                 type="button"
                 onClick={() => setTheme("system")}
                 title="System"
                 className={cn(
-                  "rounded p-1 text-neutral-500 transition-colors hover:text-neutral-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BFA14A]",
+                  "p-1 rounded focus:outline-none focus-visible:ring-[#BFA14A] focus-visible:ring-2 text-neutral-500 hover:text-neutral-200 transition-colors",
                   theme === "system" && "border border-white/[0.06] bg-white/10 text-neutral-200"
                 )}
                 aria-pressed={theme === "system"}
@@ -138,7 +138,7 @@ export function UserProfileDropdown() {
                 onClick={() => setTheme("light")}
                 title="Light"
                 className={cn(
-                  "rounded p-1 text-neutral-500 transition-colors hover:text-neutral-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BFA14A]",
+                  "p-1 rounded focus:outline-none focus-visible:ring-[#BFA14A] focus-visible:ring-2 text-neutral-500 hover:text-neutral-200 transition-colors",
                   theme === "light" && "border border-white/[0.06] bg-white/10 text-neutral-200"
                 )}
                 aria-pressed={theme === "light"}
@@ -150,7 +150,7 @@ export function UserProfileDropdown() {
                 onClick={() => setTheme("dark")}
                 title="Dark"
                 className={cn(
-                  "rounded p-1 text-neutral-500 transition-colors hover:text-neutral-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BFA14A]",
+                  "p-1 rounded focus:outline-none focus-visible:ring-[#BFA14A] focus-visible:ring-2 text-neutral-500 hover:text-neutral-200 transition-colors",
                   theme === "dark" && "border border-white/[0.06] bg-white/10 text-neutral-200"
                 )}
                 aria-pressed={theme === "dark"}
@@ -160,7 +160,7 @@ export function UserProfileDropdown() {
             </div>
           </div>
 
-          <DropdownMenu.Separator className="my-1 h-px bg-border" />
+          <DropdownMenu.Separator className="my-1 bg-border h-px" />
 
           <DropdownMenu.Item asChild className={itemClass}>
             <Link href="/">
@@ -179,12 +179,12 @@ export function UserProfileDropdown() {
             Log out
           </DropdownMenu.Item>
 
-          <DropdownMenu.Separator className="my-1 h-px bg-border" />
+          <DropdownMenu.Separator className="my-1 bg-border h-px" />
 
           <div className="p-1">
             <Link
               href="/request-access"
-              className="flex min-h-[36px] w-full items-center justify-center rounded border border-border bg-transparent text-[11px] font-medium text-foreground transition-colors duration-150 hover:bg-white/5 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+              className="flex justify-center items-center bg-transparent hover:bg-white/5 border border-border rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card w-full min-h-[36px] font-medium text-[11px] text-foreground hover:text-foreground transition-colors duration-150"
             >
               Upgrade to Pro
             </Link>

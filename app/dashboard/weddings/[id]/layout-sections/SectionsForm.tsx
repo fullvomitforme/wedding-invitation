@@ -2,6 +2,8 @@
 
 import { useState, useCallback } from "react";
 import { toast } from "sonner";
+import { GripVertical, ChevronUp, ChevronDown } from "lucide-react";
+import { cn } from "@/lib/utils";
 import type { SectionConfig } from "@/lib/wedding-defaults";
 
 const SECTION_LABELS: Record<string, string> = {
@@ -80,74 +82,112 @@ export function SectionsForm({ weddingId, initialSections, onUnsaved, onSaved }:
     save(reordered);
   };
 
-  const btnClass =
-    "min-h-[40px] min-w-[40px] inline-flex items-center justify-center rounded border border-border bg-white/5 text-foreground transition-all duration-150 hover:border-border/20 hover:bg-white/10 disabled:opacity-40 disabled:pointer-events-none outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card";
-
   return (
-    <div className="space-y-6">
-      <h2 className="text-lg font-semibold text-foreground">Layout</h2>
-      <p className="text-[11px] text-tertiary-foreground">
-        Turn sections on or off and change their order on the invitation.
-      </p>
-
+    <div className="space-y-4">
       {error && (
         <div className="rounded border border-destructive/40 bg-destructive/10 px-3 py-2 text-[11px] text-destructive" role="alert">
           {error}
         </div>
       )}
       {saved && (
-        <p className="text-[11px] text-tertiary-foreground" role="status" aria-live="polite">
-          Saved.
-        </p>
+        <div className="flex items-center gap-1.5 text-[11px] text-tertiary-foreground" role="status" aria-live="polite">
+          <svg
+            className="size-3 shrink-0"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            aria-hidden
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M5 13l4 4L19 7"
+            />
+          </svg>
+          Saved
+        </div>
       )}
 
-      <ul className="space-y-0 rounded border border-border divide-y divide-border bg-background/50">
-        {sections.map((section, index) => (
-          <li
-            key={section.id}
-            className="flex items-center gap-3 px-4 py-3 first:rounded-t-md last:rounded-b-md hover:bg-white/2"
-          >
-            <div className="flex items-center gap-2 shrink-0">
+      <div className="rounded border border-border bg-card overflow-hidden">
+        <div className="divide-y divide-border">
+          {sections.map((section, index) => (
+            <div
+              key={section.id}
+              className="flex items-center gap-3 px-3 h-[40px] hover:bg-white/[0.02] transition-colors duration-150"
+            >
+              {/* Drag handle */}
               <button
                 type="button"
-                onClick={() => move(index, -1)}
-                disabled={index === 0}
-                className={btnClass}
-                aria-label={`Move ${SECTION_LABELS[section.id] ?? section.id} up`}
+                className="flex items-center gap-1 shrink-0 text-tertiary-foreground hover:text-foreground transition-colors duration-150 cursor-grab active:cursor-grabbing focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card rounded"
+                aria-label={`Reorder ${SECTION_LABELS[section.id] ?? section.id}`}
+                onMouseDown={(e) => {
+                  // Simple drag-to-reorder could be added here
+                  e.preventDefault();
+                }}
               >
-                <span aria-hidden>↑</span>
+                <GripVertical className="size-4" aria-hidden />
               </button>
-              <button
-                type="button"
-                onClick={() => move(index, 1)}
-                disabled={index === sections.length - 1}
-                className={btnClass}
-                aria-label={`Move ${SECTION_LABELS[section.id] ?? section.id} down`}
-              >
-                <span aria-hidden>↓</span>
-              </button>
-            </div>
-            <label className="flex flex-1 min-h-[44px] items-center gap-3 cursor-pointer py-1">
-              <input
-                type="checkbox"
-                checked={section.enabled}
-                onChange={() => toggle(index)}
-                className="size-5 rounded border-border bg-white/5 text-primary outline-none transition-all duration-150 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
-                aria-describedby={`section-desc-${section.id}`}
-              />
-              <span id={`section-desc-${section.id}`} className="font-medium text-foreground">
+
+              {/* Section name */}
+              <span className="flex-1 text-[12px] font-medium text-foreground truncate">
                 {SECTION_LABELS[section.id] ?? section.id}
               </span>
-            </label>
-          </li>
-        ))}
-      </ul>
+
+              {/* Move buttons */}
+              <div className="flex items-center gap-0.5 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => move(index, -1)}
+                  disabled={index === 0}
+                  className="h-6 w-6 inline-flex items-center justify-center rounded text-tertiary-foreground hover:text-foreground hover:bg-white/5 disabled:opacity-30 disabled:cursor-not-allowed transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+                  aria-label={`Move ${SECTION_LABELS[section.id] ?? section.id} up`}
+                >
+                  <ChevronUp className="size-3.5" aria-hidden />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => move(index, 1)}
+                  disabled={index === sections.length - 1}
+                  className="h-6 w-6 inline-flex items-center justify-center rounded text-tertiary-foreground hover:text-foreground hover:bg-white/5 disabled:opacity-30 disabled:cursor-not-allowed transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+                  aria-label={`Move ${SECTION_LABELS[section.id] ?? section.id} down`}
+                >
+                  <ChevronDown className="size-3.5" aria-hidden />
+                </button>
+              </div>
+
+              {/* Toggle switch */}
+              <button
+                type="button"
+                role="switch"
+                aria-checked={section.enabled}
+                aria-label={`${section.enabled ? "Disable" : "Enable"} ${SECTION_LABELS[section.id] ?? section.id}`}
+                onClick={() => toggle(index)}
+                className={cn(
+                  "relative inline-flex h-5 w-9 shrink-0 items-center rounded-full border transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card",
+                  section.enabled
+                    ? "border-primary bg-primary"
+                    : "border-border bg-white/5"
+                )}
+              >
+                <span
+                  className={cn(
+                    "inline-block size-4 transform rounded-full bg-white transition-transform duration-150",
+                    section.enabled ? "translate-x-4" : "translate-x-0.5"
+                  )}
+                  aria-hidden
+                />
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
 
       {saving && (
-        <p className="text-[11px] text-tertiary-foreground flex items-center gap-2" aria-live="polite">
-          <span className="inline-block size-4 animate-spin rounded-full border-2 border-current border-t-transparent" aria-hidden />
+        <div className="flex items-center gap-1.5 text-[11px] text-primary/70" role="status" aria-live="polite">
+          <span className="inline-block size-3 animate-spin rounded-full border-2 border-current border-t-transparent" aria-hidden />
           Saving…
-        </p>
+        </div>
       )}
     </div>
   );

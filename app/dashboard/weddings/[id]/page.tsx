@@ -26,7 +26,7 @@ export default async function WeddingEditPage({
 
   const { data: wedding, error } = await supabase
     .from("weddings")
-    .select("content, sections, slug, status")
+    .select("content, sections, slug, status, template_id")
     .eq("id", id)
     .single();
   if (error || !wedding) notFound();
@@ -62,6 +62,7 @@ export default async function WeddingEditPage({
       initialSections={initialSections}
       initialSlug={wedding.slug}
       initialStatus={wedding.status}
+      initialTemplateId={wedding.template_id ?? "classic"}
     />
   );
 }

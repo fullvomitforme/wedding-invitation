@@ -14,6 +14,7 @@ type WeddingAccordionProps = {
   initialSections: SectionConfig[];
   initialSlug: string | null;
   initialStatus: string;
+  initialTemplateId: string;
 };
 
 export function WeddingAccordion({
@@ -22,6 +23,7 @@ export function WeddingAccordion({
   initialSections,
   initialSlug,
   initialStatus,
+  initialTemplateId,
 }: WeddingAccordionProps) {
   const [openSection, setOpenSection] = useState<string | null>("couple");
   const [saveStates, setSaveStates] = useState<Record<string, "saved" | "unsaved" | null>>({
