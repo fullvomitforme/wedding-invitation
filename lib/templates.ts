@@ -1,5 +1,6 @@
 import { ClassicTemplate } from "@/app/invitation/ClassicTemplate";
 import { ModernTemplate } from "@/app/invitation/templates/ModernTemplate";
+import { MinimalistTemplate } from "@/app/invitation/templates/MinimalistTemplate";
 import type { WeddingContent } from "./wedding-defaults";
 import type { SectionConfig } from "./wedding-defaults";
 
@@ -41,7 +42,7 @@ export const TEMPLATES: WeddingTemplate[] = [
     description: "Clean black and white with lots of whitespace",
     thumbnail: "/templates/minimalist-thumb.jpg",
     category: "minimalist",
-    component: null as any, // Will be set after MinimalistTemplate is created
+    component: MinimalistTemplate,
   },
   {
     id: "floral",
