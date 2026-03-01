@@ -1,6 +1,7 @@
 import { ClassicTemplate } from "@/app/invitation/ClassicTemplate";
 import { ModernTemplate } from "@/app/invitation/templates/ModernTemplate";
 import { MinimalistTemplate } from "@/app/invitation/templates/MinimalistTemplate";
+import { FloralTemplate } from "@/app/invitation/templates/FloralType";
 import type { WeddingContent } from "./wedding-defaults";
 import type { SectionConfig } from "./wedding-defaults";
 
@@ -50,7 +51,7 @@ export const TEMPLATES: WeddingTemplate[] = [
     description: "Organic shapes with soft pastel colors and decorative elements",
     thumbnail: "/templates/floral-thumb.jpg",
     category: "decorative",
-    component: null as any, // Will be set after FloralTemplate is created
+    component: FloralTemplate,
   },
 ];
 
