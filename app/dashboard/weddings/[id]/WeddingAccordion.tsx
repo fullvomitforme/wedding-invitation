@@ -170,6 +170,8 @@ export function WeddingAccordion({
           weddingId={weddingId}
           initialSlug={initialSlug}
           initialStatus={initialStatus}
+          initialSettings={initialContent.settings}
+          initialContent={initialContent}
           onUnsaved={handleSettingsUnsaved}
           onSaved={handleSettingsSaved}
         />

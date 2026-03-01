@@ -52,6 +52,23 @@ export interface WeddingContentSong {
   cover?: string;
 }
 
+export interface WeddingSettingsSeo {
+  pageTitle?: string;
+  metaDescription?: string;
+  ogImage?: string;
+}
+
+export interface WeddingSettingsPrivacy {
+  accessType: "public" | "password" | "invite-only";
+  password?: string;
+  expiryDate?: string;
+}
+
+export interface WeddingSettings {
+  seo?: WeddingSettingsSeo;
+  privacy?: WeddingSettingsPrivacy;
+}
+
 export interface WeddingContent {
   couple?: {
     bride: WeddingContentCouple;
@@ -63,6 +80,7 @@ export interface WeddingContent {
   mainEventDate?: string;
   blessingMessage?: { arabic: string; translation: string; source: string };
   galleryQuote?: { title: string; text: string };
+  settings?: WeddingSettings;
 }
 
 export const defaultContent: WeddingContent = {
@@ -85,4 +103,9 @@ export const defaultContent: WeddingContent = {
   events: [],
   gallery: [],
   music: [],
+  settings: {
+    privacy: {
+      accessType: "public",
+    },
+  },
 };
