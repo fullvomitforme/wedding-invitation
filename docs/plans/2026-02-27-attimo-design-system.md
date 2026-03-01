@@ -11,60 +11,95 @@ A comprehensive design token library for Attimo Studios, providing consistent co
 ### Core Brand Colors
 
 ```css
---color-charcoal: #0E0E10;
---color-soft-black: #141416;
---color-ivory: #F5F4F1;
---color-muted-silver: #CFCFD2;
---color-deep-gold: #BFA14A;
+Charcoal:      #0E0E10
+Soft Black:    #141416
+Ivory:         #F5F4F1
+Muted Silver:  #CFCFD2
+Deep Gold:     #BFA14A
 ```
 
-### Semantic Color Tokens (Light Theme)
+### Shadcn Variable Mappings
+
+The design system uses shadcn's standard CSS variable names, mapped to Attimo brand colors. This ensures compatibility with shadcn/ui components while maintaining brand consistency.
+
+#### Light Theme (`:root`)
 
 ```css
 /* Surfaces */
---surface-primary: #F5F4F1;      /* main bg */
---surface-secondary: #FFFFFF;    /* cards, panels */
---surface-tertiary: #E8E7E4;     /* accents, hover */
---surface-auth: #141416;         /* auth pages bg */
+--background:   #F5F4F1;  /* Ivory - main bg */
+--card:         #FFFFFF;    /* White - cards, panels */
+--muted:        #E8E7E4;   /* Ivory darkened - accents, hover */
+--secondary:    #E8E7E4;   /* Same as muted - secondary buttons */
 
 /* Text */
---text-primary: #0E0E10;         /* headings, primary content */
---text-secondary: #6B6B6E;       /* body, muted */
---text-tertiary: #CFCFD2;        /* captions, placeholders */
---text-inverse: #F5F4F1;          /* text on dark surfaces */
-
-/* Borders & Dividers */
---border-default: #CFCFD2;
---border-subtle: #E8E7E4;
+--foreground:       #0E0E10;  /* Charcoal - headings, primary content */
+--card-foreground:  #0E0E10;  /* Charcoal - text on cards */
+--muted-foreground: #6B6B6E;  /* Gray - body, muted text */
+--secondary-foreground: #0E0E10; /* Charcoal - text on secondary */
 
 /* Interactive */
---action-primary: #BFA14A;       /* primary buttons, links */
---action-hover: #A68A40;
+--primary:            #BFA14A;  /* Deep Gold - primary buttons, links */
+--primary-foreground: #0E0E10;  /* Charcoal - text on primary */
+--accent:             #E8E7E4;  /* Ivory darkened - accent surfaces */
+--accent-foreground:  #0E0E10;  /* Charcoal - text on accent */
+--ring:               #BFA14A;  /* Deep Gold - focus ring */
+
+/* Destructive */
+--destructive:           #b91c1c;
+--destructive-foreground: #f5f4f1;
+
+/* Borders */
+--border: #CFCFD2;  /* Muted Silver - default borders */
+--input:  #CFCFD2;  /* Muted Silver - input borders */
 ```
 
-### Semantic Color Tokens (Dark Theme)
+#### Dark Theme (`.dark`)
 
 ```css
 /* Surfaces */
---surface-primary: #141416;
---surface-secondary: #1A1A1C;
---surface-tertiary: #2A2A2E;
---surface-auth: #141416;
+--background:   #141416;  /* Soft Black - main bg */
+--card:         #1A1A1C;  /* Soft Black lightened - cards, panels */
+--muted:        #2A2A2E;  /* Soft Black lightened - accents, hover */
+--secondary:    #2A2A2E;  /* Same as muted - secondary buttons */
 
 /* Text */
---text-primary: #F5F4F1;
---text-secondary: #CFCFD2;
---text-tertiary: #6B6B6E;
---text-inverse: #0E0E10;
-
-/* Borders & Dividers */
---border-default: #3A3A3E;
---border-subtle: #2A2A2E;
+--foreground:       #F5F4F1;  /* Ivory - headings, primary content */
+--card-foreground:  #F5F4F1;  /* Ivory - text on cards */
+--muted-foreground: #CFCFD2;  /* Muted Silver - body, muted text */
+--secondary-foreground: #F5F4F1; /* Ivory - text on secondary */
 
 /* Interactive */
---action-primary: #BFA14A;
---action-hover: #A68A40;
+--primary:            #BFA14A;  /* Deep Gold - primary buttons, links */
+--primary-foreground: #0E0E10;  /* Charcoal - text on primary */
+--accent:             #2A2A2E;  /* Soft Black lightened - accent surfaces */
+--accent-foreground:  #F5F4F1;  /* Ivory - text on accent */
+--ring:               #BFA14A;  /* Deep Gold - focus ring */
+
+/* Destructive */
+--destructive:           #b91c1c;
+--destructive-foreground: #f5f4f1;
+
+/* Borders */
+--border: #3A3A3E;  /* Dark gray - default borders */
+--input:  #3A3A3E;  /* Dark gray - input borders */
 ```
+
+#### Tailwind Class Usage
+
+| Variable | Tailwind Class |
+|----------|---------------|
+| `--background` | `bg-background`, `ring-offset-background` |
+| `--card` | `bg-card`, `ring-offset-card` |
+| `--muted` | `bg-muted`, `bg-muted/*` |
+| `--foreground` | `text-foreground`, `hover:text-foreground` |
+| `--card-foreground` | `text-card-foreground` |
+| `--muted-foreground` | `text-muted-foreground`, `placeholder:text-muted-foreground` |
+| `--primary` | `bg-primary`, `text-primary`, `border-primary`, `ring-primary` |
+| `--primary-foreground` | `text-primary-foreground` |
+| `--accent` | `bg-accent`, `bg-accent/*` |
+| `--accent-foreground` | `text-accent-foreground` |
+| `--border` | `border-border`, `border-border/*` |
+| `--ring` | `ring-ring`, `ring-ring/*` |
 
 ---
 
@@ -193,46 +228,80 @@ Minimal shadows; depth primarily through spacing.
 
 ## Tailwind Integration
 
-All tokens are mapped in `@theme inline` in `globals.css`, enabling semantic class names:
+### Using Design System Colors
 
-- `bg-surface-primary`, `bg-surface-secondary`, `bg-surface-tertiary`
-- `text-primary`, `text-secondary`, `text-tertiary`, `text-inverse`
-- `text-display-lg`, `text-display-md`, `text-h1`, `text-h2`, `text-body`, `text-caption`, `text-overline`
-- `space-1` through `space-24`
-- `rounded-sm`, `rounded-md`, `rounded-lg`, `rounded-full`
-- `shadow-sm`, `shadow-md`, `shadow-lg`, `shadow-xl`
+All shadcn color variables are mapped in `@theme inline` in `globals.css`:
+
+```css
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  /* ... typography, spacing, radius, etc. */
+}
+```
+
+### Best Practices
+
+- **Never use arbitrary hex colors** like `#0E0E10` or `#BFA14A`
+- **Never use neutral colors** like `text-neutral-100`, `bg-neutral-900`
+- **Use semantic variable classes** like `bg-primary`, `text-foreground`, `border-border`
+- **For opacity variants**, use `bg-background/10`, `text-foreground/60`, etc.
+- **Use `bg-muted/*`** for hover states and subtle backgrounds
+- **Use `border-border/*`** for subtle borders with opacity
 
 ---
 
-## Implementation Phases
+## Implementation Status
 
-### Phase 1: globals.css Update
-- Add all design tokens to `:root`
-- Define dark theme token overrides in `.dark`
-- Update `@theme inline` mappings
-- Keep old tokens for backward compatibility
+### ✅ Completed
 
-### Phase 2: UI Components (components/ui/*)
-- Refactor `button.tsx` to use semantic variants
-- Refactor `input.tsx` to use token-based borders, focus rings
-- Update `card.tsx` shadows and radii
-- Update other shadcn components as needed
+- **globals.css** - Shadcn variables properly mapped to Attimo colors with light/dark themes
+- **Auth pages** (`/login`, `/signup`) - All hardcoded colors replaced with semantic classes
+- **Dashboard** (`layout.tsx`, `DashboardHeader.tsx`, `UserProfileDropdown.tsx`) - Updated to use design system colors
+- **Landing components** - Updated to use semantic variable classes
 
-### Phase 3: Page Components (app/**/*)
-- Replace hardcoded colors with token classes
-- Remove arbitrary values (`tracking-[0.18em]`, `text-[11px]`, etc.)
-- Replace custom shadows with token-based shadows
-- Standardize radii
-- Remove custom durations, use token-based transitions
+### 🚧 Ongoing
 
-### Phase 4: Verification
-- Audit remaining inline styles and arbitrary values
-- Test light/dark mode toggle
-- Verify spacing consistency
-- Ensure all tokens are used correctly
+- **Remaining pages/components** - Some files still contain `text-neutral-*`, `bg-neutral-*`, or arbitrary hex colors
+- **UI components** - shadcn components use standard variables correctly (no changes needed)
+
+### 📋 Implementation Guidelines
+
+When adding new components or updating existing ones:
+
+1. **Use shadcn variable classes** instead of arbitrary colors:
+   - ❌ `text-neutral-100`, `bg-neutral-900`, `#0E0E10`
+   - ✅ `text-foreground`, `bg-card`, `bg-primary`
+
+2. **Use opacity variants for subtle effects**:
+   - ❌ `border-white/10`, `bg-white/5`, `text-neutral-500`
+   - ✅ `border-border/10`, `bg-muted/20`, `text-muted-foreground`
+
+3. **Use semantic hover/focus states**:
+   - ❌ `hover:bg-white/10`, `focus:ring-[#BFA14A]`
+   - ✅ `hover:bg-muted/30`, `focus:ring-primary`
+
+4. **Use `bg-card` for dark card backgrounds**:
+   - Use `bg-card` for card components in both light and dark themes
+   - Use `ring-offset-card` for ring offsets on card backgrounds
 
 ---
 
 ## Backward Compatibility
 
-Old CSS variables (`--primary`, `--background`, `--foreground`, etc.) are retained during transition to prevent breaking changes.
+Shadcn standard variable names (`--primary`, `--background`, `--foreground`, etc.) are used throughout the codebase for compatibility with shadcn/ui components. The design system ensures these map to Attimo brand colors in both light and dark themes.

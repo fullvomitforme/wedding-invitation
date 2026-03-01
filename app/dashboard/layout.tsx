@@ -16,7 +16,7 @@ export default async function DashboardLayout({
     redirect("/login");
   }
   return (
-    <div className="min-h-screen bg-[#0E0E10] text-neutral-100">
+    <div className="min-h-screen bg-background text-foreground">
       <DashboardHeader />
       <main className="flex-1 px-4 py-4 sm:px-6 sm:py-6">{children}</main>
     </div>

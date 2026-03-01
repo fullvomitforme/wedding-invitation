@@ -10,7 +10,7 @@ import { UserProfileDropdown } from "./UserProfileDropdown";
 function ProfileDropdownPlaceholder() {
   return (
     <span
-      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/6 bg-white/5 text-[11px] font-medium text-neutral-400"
+      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border/10 bg-muted/20 text-[11px] font-medium text-muted-foreground"
       aria-hidden
     >
       …
@@ -32,16 +32,16 @@ export function DashboardHeader() {
     pathname !== "/dashboard/new";
 
   return (
-    <header className="sticky top-0 z-10 flex min-h-[52px] items-center justify-between gap-4 border-b border-white/6 bg-[#0E0E10] px-4 sm:px-6">
+    <header className="sticky top-0 z-10 flex min-h-[52px] items-center justify-between gap-4 border-b border-border/10 bg-background px-4 sm:px-6">
       <div className="flex min-w-0 items-center gap-4">
         <Link
           href="/dashboard"
-          className="shrink-0 transition-colors hover:text-neutral-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#BFA14A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0E0E10] rounded"
+          className="shrink-0 transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded"
           aria-label="Attimo dashboard"
         >
           <BrandMark className="h-5" />
         </Link>
-        <span className="hidden truncate text-sm text-neutral-500 sm:inline" aria-hidden>
+        <span className="hidden truncate text-sm text-muted-foreground sm:inline" aria-hidden>
           {isWeddingRoute ? "Project" : "Projects"}
         </span>
       </div>
@@ -53,7 +53,7 @@ export function DashboardHeader() {
             type="search"
             placeholder="Find…"
             autoComplete="off"
-            className="h-8 min-w-[140px] max-w-[200px] rounded border border-white/6 bg-white/5 px-2.5 py-1 text-xs text-neutral-200 placeholder:text-neutral-500 outline-none transition-colors focus:border-white/10 focus:bg-white/5 focus-visible:ring-2 focus-visible:ring-[#BFA14A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0E0E10]"
+            className="h-8 min-w-[140px] max-w-[200px] rounded border border-border/10 bg-muted/20 px-2.5 py-1 text-xs placeholder:text-muted-foreground outline-none transition-colors focus:border-border/20 focus:bg-muted/30 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           />
         </label>
         {mounted ? <UserProfileDropdown /> : <ProfileDropdownPlaceholder />}
