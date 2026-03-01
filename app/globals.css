@@ -19,11 +19,11 @@
   --secondary-foreground: #0e0e10; /* Charcoal - text on secondary */
 
   /* Interactive */
-  --primary: #bfa14a;            /* Deep Gold - primary buttons, links */
+  --primary: #ffffff;            /* Deep Gold - primary buttons, links */
   --primary-foreground: #0e0e10; /* Charcoal - text on primary */
   --accent: #e8e7e4;              /* Ivory darkened - accent surfaces */
   --accent-foreground: #0e0e10;   /* Charcoal - text on accent */
-  --ring: #bfa14a;                /* Deep Gold - focus ring */
+  --ring: #ffffff;                /* Deep Gold - focus ring */
 
   /* Destructive */
   --destructive: #b91c1c;
@@ -48,11 +48,11 @@
   --secondary-foreground: #f5f4f1; /* Ivory - text on secondary */
 
   /* Interactive */
-  --primary: #bfa14a;            /* Deep Gold - primary buttons, links */
+  --primary: #ffffff;            /* Deep Gold - primary buttons, links */
   --primary-foreground: #0e0e10; /* Charcoal - text on primary */
   --accent: #2a2a2e;              /* Soft Black lightened - accent surfaces */
   --accent-foreground: #f5f4f1;   /* Ivory - text on accent */
-  --ring: #bfa14a;                /* Deep Gold - focus ring */
+  --ring: #ffffff;                /* Deep Gold - focus ring */
 
   /* Destructive */
   --destructive: #b91c1c;
