@@ -1,4 +1,5 @@
 import { ClassicTemplate } from "@/app/invitation/ClassicTemplate";
+import { ModernTemplate } from "@/app/invitation/templates/ModernTemplate";
 import type { WeddingContent } from "./wedding-defaults";
 import type { SectionConfig } from "./wedding-defaults";
 
@@ -32,7 +33,7 @@ export const TEMPLATES: WeddingTemplate[] = [
     description: "Bold dark mode with gradient accents and asymmetric grid",
     thumbnail: "/templates/modern-thumb.jpg",
     category: "modern",
-    component: null as any, // Will be set after ModernTemplate is created
+    component: ModernTemplate,
   },
   {
     id: "minimalist",
