@@ -5,7 +5,7 @@ import { BrandMark } from "@/components/BrandMark";
 export function LandingNav() {
   return (
 		<nav
-			className='flex justify-between items-center bg-background px-6 md:px-12 py-6 border border-foreground/20 rounded-3xl dark'
+			className='top-5 z-10 sticky flex justify-between items-center bg-background px-6 md:px-12 py-6 border border-foreground/20 rounded-3xl dark'
 			aria-label='Main'
 		>
 			<Link
