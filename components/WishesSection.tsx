@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Wish } from "@/types";
 import { format } from "date-fns";
 import { useInvitation } from "@/components/InvitationContext";
+import { getTemplateTheme } from "@/lib/template-themes";
 import { Send, MapPin } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -13,6 +14,7 @@ gsap.registerPlugin(ScrollTrigger);
 export default function WishesSection() {
   const inv = useInvitation();
   const weddingId = inv?.weddingId;
+  const theme = getTemplateTheme(inv?.templateId);
   const sectionRef = useRef<HTMLDivElement>(null);
   const [wishes, setWishes] = useState<Wish[]>([]);
   const [formData, setFormData] = useState({
@@ -103,46 +105,46 @@ export default function WishesSection() {
     <section
       id="wishes"
       ref={sectionRef}
-      className="py-20 px-4 bg-white"
+      className={`py-20 px-4 ${theme.sectionBg}`}
     >
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-4xl md:text-5xl font-serif font-bold text-center mb-16 text-gray-800">
+        <h2 className={`text-4xl md:text-5xl font-serif font-bold text-center mb-16 ${theme.headingText}`}>
           Wishes
         </h2>
 
         {loading ? (
           <div className="text-center py-12">
-            <p className="text-gray-500">Loading wishes...</p>
+            <p className={theme.mutedText}>Loading wishes...</p>
           </div>
         ) : (
           <div className="space-y-6 mb-12">
             {wishes.length === 0 ? (
-              <div className="text-center py-12 bg-gray-50 rounded-xl">
-                <p className="text-gray-500">No wishes yet. Be the first to send one!</p>
+              <div className={`text-center py-12 ${theme.accentBg} rounded-xl`}>
+                <p className={theme.mutedText}>No wishes yet. Be the first to send one!</p>
               </div>
             ) : (
               wishes.map((wish) => (
             <div
               key={wish.id}
-              className="wish-item bg-white rounded-xl shadow-md p-6 border border-gray-100"
+              className={`wish-item ${theme.cardBg} rounded-xl shadow-md p-6 border ${theme.borderColor}`}
             >
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-rose-200 to-pink-300 flex items-center justify-center flex-shrink-0">
-                  <span className="text-xl font-bold text-gray-700">
+                <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${theme.gradientFrom} ${theme.gradientTo} flex items-center justify-center flex-shrink-0`}>
+                  <span className={`text-xl font-bold ${theme.bodyText}`}>
                     {wish.name.charAt(0).toUpperCase()}
                   </span>
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="font-semibold text-gray-800">{wish.name}</span>
-                    <span className="text-gray-400">•</span>
-                    <div className="flex items-center gap-1 text-sm text-gray-500">
+                    <span className={`font-semibold ${theme.headingText}`}>{wish.name}</span>
+                    <span className={theme.mutedText}>•</span>
+                    <div className={`flex items-center gap-1 text-sm ${theme.mutedText}`}>
                       <MapPin className="w-3 h-3" />
                       <span>{wish.location}</span>
                     </div>
                   </div>
-                  <p className="text-gray-700 mb-2">{wish.message}</p>
-                  <p className="text-xs text-gray-400">
+                  <p className={`${theme.bodyText} mb-2`}>{wish.message}</p>
+                  <p className={`text-xs ${theme.mutedText}`}>
                     {format(wish.createdAt, "MMM d, yyyy 'at' h:mm a")}
                   </p>
                 </div>
@@ -153,8 +155,8 @@ export default function WishesSection() {
           </div>
         )}
 
-        <div className="bg-gray-50 rounded-2xl p-8">
-          <h3 className="text-xl font-semibold mb-6 text-gray-800">Send a wish:</h3>
+        <div className={`${theme.accentBg} rounded-2xl p-8`}>
+          <h3 className={`text-xl font-semibold mb-6 ${theme.headingText}`}>Send a wish:</h3>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid md:grid-cols-2 gap-4">
               <input
@@ -163,7 +165,7 @@ export default function WishesSection() {
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 placeholder="Your name"
-                className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none transition-all"
+                className={`px-4 py-3 ${theme.inputBg} border ${theme.inputBorder} rounded-lg ${theme.inputFocus} outline-none transition-all`}
               />
               <input
                 type="text"
@@ -171,7 +173,7 @@ export default function WishesSection() {
                 value={formData.location}
                 onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                 placeholder="Your location"
-                className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none transition-all"
+                className={`px-4 py-3 ${theme.inputBg} border ${theme.inputBorder} rounded-lg ${theme.inputFocus} outline-none transition-all`}
               />
             </div>
             <textarea
@@ -180,7 +182,7 @@ export default function WishesSection() {
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
               rows={4}
               placeholder="Your wish..."
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none transition-all resize-none"
+              className={`w-full px-4 py-3 ${theme.inputBg} border ${theme.inputBorder} rounded-lg ${theme.inputFocus} outline-none transition-all resize-none`}
             />
             {error && (
               <div className="px-4 py-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
@@ -190,7 +192,7 @@ export default function WishesSection() {
             <button
               type="submit"
               disabled={submitting}
-              className="w-full px-6 py-4 bg-rose-500 text-white rounded-lg font-semibold hover:bg-rose-600 transition-colors duration-300 hover:scale-[1.02] flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className={`w-full px-6 py-4 ${theme.primaryBg} text-white rounded-lg font-semibold ${theme.primaryHover} transition-colors duration-300 hover:scale-[1.02] flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed`}
             >
               <Send className="w-5 h-5" />
               {submitting ? "Submitting..." : "Submit now"}

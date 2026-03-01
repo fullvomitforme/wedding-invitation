@@ -93,7 +93,15 @@ export async function PATCH(
 
     if (body.content !== undefined) updates.content = body.content;
     if (body.sections !== undefined) updates.sections = body.sections;
-    if (body.template_id !== undefined) updates.template_id = body.template_id;
+    if (body.template_id !== undefined) {
+      // Validate template_id
+      const validTemplateIds = ["classic", "modern", "minimalist", "floral"];
+      if (typeof body.template_id === "string" && validTemplateIds.includes(body.template_id)) {
+        updates.template_id = body.template_id;
+      } else {
+        return NextResponse.json({ error: "Invalid template_id" }, { status: 400 });
+      }
+    }
     if (body.status !== undefined) {
       if (!["draft", "released"].includes(body.status)) {
         return NextResponse.json({ error: "Invalid status" }, { status: 400 });

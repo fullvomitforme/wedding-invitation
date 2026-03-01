@@ -37,7 +37,7 @@ export function FloralTemplate({ weddingId, content, sections }: FloralTemplateP
     .sort((a, b) => a.order - b.order);
 
   return (
-    <InvitationProvider value={{ weddingId, content, sections }}>
+    <InvitationProvider value={{ weddingId, content, sections, templateId: "floral" }}>
       <div className="min-h-screen bg-stone-50 text-stone-800">
         {sorted.map((section) => {
           const Component = SECTION_COMPONENTS[section.id];

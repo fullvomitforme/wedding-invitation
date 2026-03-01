@@ -13,6 +13,7 @@ export interface InvitationContextValue {
   weddingId: string;
   content: WeddingContent;
   sections: SectionConfig[];
+  templateId: string;
 }
 
 const InvitationContext = createContext<InvitationContextValue | null>(null);

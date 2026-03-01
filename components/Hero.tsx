@@ -4,12 +4,14 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { coupleData, blessingMessage } from "@/lib/data";
 import { useInvitation } from "@/components/InvitationContext";
+import { getTemplateTheme } from "@/lib/template-themes";
 import { Heart } from "lucide-react";
 
 export default function Hero() {
   const inv = useInvitation();
   const couple = inv?.content?.couple ?? { bride: coupleData.bride, groom: coupleData.groom };
   const blessing = inv?.content?.blessingMessage ?? blessingMessage;
+  const theme = getTemplateTheme(inv?.templateId);
   const heroRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -61,7 +63,7 @@ export default function Hero() {
         className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto"
       >
         <div className="mb-6">
-          <Heart className="w-12 h-12 mx-auto mb-4 fill-rose-400 text-rose-400 animate-pulse" />
+          <Heart className={`w-12 h-12 mx-auto mb-4 ${theme.primaryText} animate-pulse`} />
         </div>
 
         <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6">
@@ -70,7 +72,7 @@ export default function Hero() {
 
         <div className="flex items-center justify-center gap-4 mb-6">
           <div className="h-px w-20 bg-white/50" />
-          <Heart className="w-6 h-6 fill-rose-400 text-rose-400" />
+          <Heart className={`w-6 h-6 ${theme.primaryText}`} />
           <div className="h-px w-20 bg-white/50" />
         </div>
 

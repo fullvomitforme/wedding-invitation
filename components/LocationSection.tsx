@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { events } from "@/lib/data";
 import { useInvitation } from "@/components/InvitationContext";
+import { getTemplateTheme } from "@/lib/template-themes";
 import { format } from "date-fns";
 import { MapPin, ExternalLink } from "lucide-react";
 
@@ -15,6 +16,7 @@ export default function LocationSection() {
   const eventsToUse = inv?.content?.events?.length
     ? inv.content.events.map((ev) => ({ ...ev, date: new Date(ev.date) }))
     : events;
+  const theme = getTemplateTheme(inv?.templateId);
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -41,10 +43,10 @@ export default function LocationSection() {
     <section
       id="location"
       ref={sectionRef}
-      className="py-20 px-4 bg-white"
+      className={`py-20 px-4 ${theme.sectionBg}`}
     >
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-4xl md:text-5xl font-serif font-bold text-center mb-16 text-gray-800">
+        <h2 className={`text-4xl md:text-5xl font-serif font-bold text-center mb-16 ${theme.headingText}`}>
           Event Locations
         </h2>
 
@@ -52,25 +54,25 @@ export default function LocationSection() {
           {eventsToUse.map((event, index) => (
             <div
               key={index}
-              className="event-card bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300"
+              className={`event-card ${theme.cardBg} rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300`}
             >
-              <h3 className="text-2xl md:text-3xl font-serif font-bold mb-4 text-gray-800 capitalize">
+              <h3 className={`text-2xl md:text-3xl font-serif font-bold mb-4 ${theme.headingText} capitalize`}>
                 {event.title}
               </h3>
 
               <div className="mb-4">
-                <p className="text-lg font-semibold text-gray-700 mb-1">
+                <p className={`text-lg font-semibold ${theme.bodyText} mb-1`}>
                   {format(event.date, "EEEE, MMMM do, yyyy")}
                 </p>
-                <p className="text-gray-600">{event.time}</p>
+                <p className={theme.bodyText}>{event.time}</p>
               </div>
 
               <div className="mb-6">
                 <div className="flex items-start gap-3 mb-2">
-                  <MapPin className="w-5 h-5 text-rose-500 mt-1 flex-shrink-0" />
+                  <MapPin className={`w-5 h-5 ${theme.primaryText} mt-1 flex-shrink-0`} />
                   <div>
-                    <p className="font-semibold text-gray-800 mb-1">{event.location}</p>
-                    <p className="text-sm text-gray-600">{event.address}</p>
+                    <p className={`font-semibold ${theme.headingText} mb-1`}>{event.location}</p>
+                    <p className={`text-sm ${theme.bodyText}`}>{event.address}</p>
                   </div>
                 </div>
               </div>
@@ -80,7 +82,7 @@ export default function LocationSection() {
                   href={event.mapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-rose-500 hover:text-rose-600 font-medium transition-colors"
+                  className={`inline-flex items-center gap-2 ${theme.primaryText} ${theme.primaryHover} font-medium transition-colors`}
                 >
                   See location
                   <ExternalLink className="w-4 h-4" />
@@ -89,8 +91,8 @@ export default function LocationSection() {
 
               {/* Google Maps Embed */}
               <div className="mt-6 rounded-lg overflow-hidden">
-                <div className="w-full h-64 bg-gray-200 flex items-center justify-center">
-                  <p className="text-gray-500">Google Maps will be embedded here</p>
+                <div className={`w-full h-64 ${theme.borderColor} flex items-center justify-center`}>
+                  <p className={theme.mutedText}>Google Maps will be embedded here</p>
                 </div>
               </div>
             </div>

@@ -3,11 +3,15 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useInvitation } from "@/components/InvitationContext";
+import { getTemplateTheme } from "@/lib/template-themes";
 import { Gift } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function GiftSection() {
+  const inv = useInvitation();
+  const theme = getTemplateTheme(inv?.templateId);
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -30,21 +34,21 @@ export default function GiftSection() {
   return (
     <section
       ref={sectionRef}
-      className="py-20 px-4 bg-gradient-to-b from-white to-rose-50/30"
+      className={`py-20 px-4 bg-gradient-to-b ${theme.gradientFrom} ${theme.gradientTo}`}
     >
       <div className="max-w-4xl mx-auto">
-        <div className="gift-content bg-white rounded-2xl shadow-lg p-8 md:p-12 text-center">
+        <div className={`gift-content ${theme.cardBg} rounded-2xl shadow-lg p-8 md:p-12 text-center`}>
           <div className="mb-6">
-            <Gift className="w-16 h-16 mx-auto mb-4 text-rose-500" />
+            <Gift className={`w-16 h-16 mx-auto mb-4 ${theme.primaryText}`} />
           </div>
-          <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4 text-gray-800">
+          <h2 className={`text-3xl md:text-4xl font-serif font-bold mb-4 ${theme.headingText}`}>
             Send your gift
           </h2>
-          <p className="text-lg text-gray-600 mb-8">
+          <p className={`text-lg ${theme.bodyText} mb-8`}>
             Catatan kado atau kata kata terimakasih untuk yang memberikan hadiah. di menu (Amplop
             digital)
           </p>
-          <button className="px-8 py-4 bg-rose-500 text-white rounded-full font-semibold hover:bg-rose-600 transition-colors duration-300 hover:scale-105">
+          <button className={`px-8 py-4 ${theme.primaryBg} text-white rounded-full font-semibold ${theme.primaryHover} transition-colors duration-300 hover:scale-105`}>
             Make a gift now
           </button>
         </div>

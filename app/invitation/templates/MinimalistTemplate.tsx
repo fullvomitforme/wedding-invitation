@@ -37,7 +37,7 @@ export function MinimalistTemplate({ weddingId, content, sections }: MinimalistT
     .sort((a, b) => a.order - b.order);
 
   return (
-    <InvitationProvider value={{ weddingId, content, sections }}>
+    <InvitationProvider value={{ weddingId, content, sections, templateId: "minimalist" }}>
       <div className="min-h-screen bg-white text-neutral-900">
         {sorted.map((section) => {
           const Component = SECTION_COMPONENTS[section.id];

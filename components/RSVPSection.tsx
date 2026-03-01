@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { RSVPResponse } from "@/types";
 import { useInvitation } from "@/components/InvitationContext";
+import { getTemplateTheme } from "@/lib/template-themes";
 import { Send, Users } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -12,6 +13,7 @@ gsap.registerPlugin(ScrollTrigger);
 export default function RSVPSection() {
   const inv = useInvitation();
   const weddingId = inv?.weddingId;
+  const theme = getTemplateTheme(inv?.templateId);
   const sectionRef = useRef<HTMLDivElement>(null);
   const [guestCount, setGuestCount] = useState(0);
   const [formData, setFormData] = useState<RSVPResponse>({
@@ -103,43 +105,43 @@ export default function RSVPSection() {
     <section
       id="rsvp"
       ref={sectionRef}
-      className="py-20 px-4 bg-gradient-to-b from-white to-rose-50/30"
+      className={`py-20 px-4 bg-gradient-to-b ${theme.gradientFrom} ${theme.gradientTo}`}
     >
       <div className="max-w-4xl mx-auto">
         <div className="rsvp-content text-center mb-12">
-          <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 bg-rose-100 rounded-full">
-            <Users className="w-5 h-5 text-rose-600" />
-            <span className="text-rose-600 font-semibold">
+          <div className={`inline-flex items-center gap-2 mb-4 px-4 py-2 ${theme.accentBg} rounded-full`}>
+            <Users className={`w-5 h-5 ${theme.accentText}`} />
+            <span className={`${theme.accentText} font-semibold`}>
               {guestCount} guest{guestCount !== 1 ? "s" : ""} response will join
             </span>
           </div>
-          <p className="text-gray-600 mb-2">
+          <p className={`${theme.bodyText} mb-2`}>
             let&apos;s send your response too.
           </p>
-          <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4 text-gray-800">
+          <h2 className={`text-4xl md:text-5xl font-serif font-bold mb-4 ${theme.headingText}`}>
             Reservation (RSVP)
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className={`text-lg ${theme.bodyText} max-w-2xl mx-auto`}>
             It is an honor and happiness for us if, Mr / Mrs / Brother / i. Thank you for
             coming to give us your blessing.
           </p>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12">
+        <div className={`${theme.cardBg} rounded-2xl shadow-lg p-8 md:p-12`}>
           {submitted ? (
             <div className="text-center py-12">
               <div className="w-16 h-16 mx-auto mb-4 bg-green-100 rounded-full flex items-center justify-center">
                 <Send className="w-8 h-8 text-green-600" />
               </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-2">
+              <h3 className={`text-2xl font-bold ${theme.headingText} mb-2`}>
                 Thank you for your response!
               </h3>
-              <p className="text-gray-600">We&apos;re looking forward to celebrating with you.</p>
+              <p className={theme.bodyText}>We&apos;re looking forward to celebrating with you.</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className={`block text-sm font-medium ${theme.bodyText} mb-2`}>
                   Your Name *
                 </label>
                 <input
@@ -147,13 +149,13 @@ export default function RSVPSection() {
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none transition-all"
+                  className={`w-full px-4 py-3 ${theme.inputBg} border ${theme.inputBorder} rounded-lg ${theme.inputFocus} outline-none transition-all`}
                   placeholder="Enter your name"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className={`block text-sm font-medium ${theme.bodyText} mb-2`}>
                   Will you attend? *
                 </label>
                 <div className="grid grid-cols-3 gap-4">
@@ -164,8 +166,8 @@ export default function RSVPSection() {
                       onClick={() => setFormData({ ...formData, attendance: option })}
                       className={`px-4 py-3 rounded-lg font-medium transition-all ${
                         formData.attendance === option
-                          ? "bg-rose-500 text-white"
-                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                          ? `${theme.primaryBg} text-white`
+                          : `${theme.accentBg} ${theme.bodyText} ${theme.primaryHover}`
                       }`}
                     >
                       {option.charAt(0).toUpperCase() + option.slice(1)}
@@ -176,7 +178,7 @@ export default function RSVPSection() {
 
               {formData.attendance === "yes" && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className={`block text-sm font-medium ${theme.bodyText} mb-2`}>
                     Number of Guests *
                   </label>
                   <input
@@ -187,20 +189,20 @@ export default function RSVPSection() {
                     onChange={(e) =>
                       setFormData({ ...formData, guestCount: parseInt(e.target.value) || 1 })
                     }
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none transition-all"
+                    className={`w-full px-4 py-3 ${theme.inputBg} border ${theme.inputBorder} rounded-lg ${theme.inputFocus} outline-none transition-all`}
                   />
                 </div>
               )}
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className={`block text-sm font-medium ${theme.bodyText} mb-2`}>
                   Message (Optional)
                 </label>
                 <textarea
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   rows={4}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none transition-all resize-none"
+                  className={`w-full px-4 py-3 ${theme.inputBg} border ${theme.inputBorder} rounded-lg ${theme.inputFocus} outline-none transition-all resize-none`}
                   placeholder="Leave a message for the couple..."
                 />
               </div>
@@ -213,16 +215,16 @@ export default function RSVPSection() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full px-6 py-4 bg-rose-500 text-white rounded-lg font-semibold hover:bg-rose-600 transition-colors duration-300 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
+                className={`w-full px-6 py-4 ${theme.primaryBg} text-white rounded-lg font-semibold ${theme.primaryHover} transition-colors duration-300 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed`}
               >
                 {loading ? "Submitting..." : "Submit Now"}
               </button>
             </form>
           )}
 
-          <div className="mt-12 pt-8 border-t border-gray-200">
-            <p className="text-sm font-medium text-gray-700 mb-4">also invite:</p>
-            <ul className="space-y-2 text-sm text-gray-600">
+          <div className={`mt-12 pt-8 border-t ${theme.borderColor}`}>
+            <p className={`text-sm font-medium ${theme.bodyText} mb-4`}>also invite:</p>
+            <ul className={`space-y-2 text-sm ${theme.bodyText}`}>
               <li>• Keluarga Besar Bapak Sujono</li>
               <li>• Keluarga Besar PT Emence</li>
               <li>• Teman Teman SMKN 1</li>

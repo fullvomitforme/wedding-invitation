@@ -6,6 +6,8 @@ import { WeddingAccordion } from "./WeddingAccordion";
 import type { WeddingContent } from "@/lib/wedding-defaults";
 import type { SectionConfig } from "@/lib/wedding-defaults";
 
+export const dynamic = "force-dynamic";
+
 export default async function WeddingEditPage({
   params,
 }: {

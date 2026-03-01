@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Check } from "lucide-react";
 import { TEMPLATES } from "@/lib/templates";
@@ -13,9 +14,16 @@ type Props = {
 };
 
 export function TemplateForm({ weddingId, initialTemplateId, onUnsaved, onSaved }: Props) {
+  const router = useRouter();
   const [selectedId, setSelectedId] = useState(initialTemplateId);
   const [saving, setSaving] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
+
+  // Sync with prop changes
+  useEffect(() => {
+    setSelectedId(initialTemplateId);
+    setHasChanges(false);
+  }, [initialTemplateId]);
 
   const handleSelect = async (templateId: string) => {
     setSelectedId(templateId);
@@ -42,6 +50,8 @@ export function TemplateForm({ weddingId, initialTemplateId, onUnsaved, onSaved 
       toast.success("Template updated.");
       setHasChanges(false);
       onSaved?.();
+      // Refresh the page data to get updated template_id
+      router.refresh();
     } catch {
       toast.error("Failed to update template");
       setHasChanges(true);

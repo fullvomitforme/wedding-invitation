@@ -5,6 +5,8 @@ import { createServerClient } from "@/lib/supabase";
 import { getTemplateComponent } from "@/lib/templates";
 import type { SectionConfig } from "@/components/InvitationContext";
 
+export const dynamic = "force-dynamic";
+
 export default async function PreviewPage({
   params,
 }: {

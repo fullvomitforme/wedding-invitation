@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { mainEventDate } from "@/lib/data";
 import { useInvitation } from "@/components/InvitationContext";
+import { getTemplateTheme } from "@/lib/template-themes";
 import { format } from "date-fns";
 import { Calendar } from "lucide-react";
 
@@ -22,6 +23,7 @@ export default function DateSection() {
   const mainDate = inv?.content?.mainEventDate
     ? new Date(inv.content.mainEventDate)
     : mainEventDate;
+  const theme = getTemplateTheme(inv?.templateId);
   const sectionRef = useRef<HTMLDivElement>(null);
   const [countdown, setCountdown] = useState<Countdown>({
     days: 0,
@@ -83,10 +85,10 @@ export default function DateSection() {
     <section
       id="date"
       ref={sectionRef}
-      className="py-20 px-4 bg-gradient-to-b from-rose-50/30 to-white"
+      className={`py-20 px-4 bg-gradient-to-b ${theme.gradientFrom} ${theme.gradientTo}`}
     >
       <div className="max-w-4xl mx-auto text-center">
-        <h2 className="text-4xl md:text-5xl font-serif font-bold mb-12 text-gray-800">
+        <h2 className={`text-4xl md:text-5xl font-serif font-bold mb-12 ${theme.headingText}`}>
           Save the Date
         </h2>
 
@@ -99,12 +101,12 @@ export default function DateSection() {
           ].map((item, index) => (
             <div
               key={item.label}
-              className="countdown-item bg-white rounded-xl shadow-lg p-6"
+              className={`countdown-item ${theme.cardBg} rounded-xl shadow-lg p-6`}
             >
-              <div className="text-4xl md:text-5xl font-bold text-rose-500 mb-2">
+              <div className={`text-4xl md:text-5xl font-bold ${theme.primaryText} mb-2`}>
                 {item.value}
               </div>
-              <div className="text-sm md:text-base text-gray-600 uppercase tracking-wide">
+              <div className={`text-sm md:text-base ${theme.bodyText} uppercase tracking-wide`}>
                 {item.label}
               </div>
             </div>
@@ -112,14 +114,14 @@ export default function DateSection() {
         </div>
 
         <div className="mb-8">
-          <p className="text-2xl md:text-3xl font-serif font-semibold text-gray-800 mb-2">
+          <p className={`text-2xl md:text-3xl font-serif font-semibold ${theme.headingText} mb-2`}>
             {format(mainDate, "EEEE, MMMM do, yyyy")}
           </p>
         </div>
 
         <button
           onClick={saveToCalendar}
-          className="inline-flex items-center gap-2 px-6 py-3 bg-rose-500 text-white rounded-full font-medium hover:bg-rose-600 transition-colors duration-300 hover:scale-105"
+          className={`inline-flex items-center gap-2 px-6 py-3 ${theme.primaryBg} text-white rounded-full font-medium ${theme.primaryHover} transition-colors duration-300 hover:scale-105`}
         >
           <Calendar className="w-5 h-5" />
           Save event to calendar

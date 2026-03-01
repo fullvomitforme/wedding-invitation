@@ -37,7 +37,7 @@ export function ModernTemplate({ weddingId, content, sections }: ModernTemplateP
     .sort((a, b) => a.order - b.order);
 
   return (
-    <InvitationProvider value={{ weddingId, content, sections }}>
+    <InvitationProvider value={{ weddingId, content, sections, templateId: "modern" }}>
       <div className="min-h-screen bg-slate-950 text-white">
         {sorted.map((section) => {
           const Component = SECTION_COMPONENTS[section.id];

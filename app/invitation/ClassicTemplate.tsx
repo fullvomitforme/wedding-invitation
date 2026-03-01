@@ -37,7 +37,7 @@ export function ClassicTemplate({ weddingId, content, sections }: ClassicTemplat
     .sort((a, b) => a.order - b.order);
 
   return (
-    <InvitationProvider value={{ weddingId, content, sections }}>
+    <InvitationProvider value={{ weddingId, content, sections, templateId: "classic" }}>
       <div className="min-h-screen bg-white">
         {sorted.map((section) => {
           const Component = SECTION_COMPONENTS[section.id];
